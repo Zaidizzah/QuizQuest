@@ -1,1574 +1,1592 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="author" content="Quist Quest" />
-    <meta name="keywords" content="Game, HTML5, HTML, CSS, JavaScript" />
-    <meta name="description" content="Quist Quest - Defend the Knowledge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="ie=edge"
+    />
+    <meta
+      name="author"
+      content="Quist Quest"
+    />
+    <meta
+      name="keywords"
+      content="Game, HTML5, HTML, CSS, JavaScript"
+    />
+    <meta
+      name="description"
+      content="Quist Quest - Defend the Knowledge"
+    />
     <title>Quist Quest - Defend the Knowledge</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/game-ui.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="resources/css/game-ui.css"
+    />
     <style id="containerStyle">
-        .z-100 {
-            z-index: 100;
+      .z-100 {
+        z-index: 100;
+      }
+
+      #fullscreen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #fullscreen:not(.on) {
+        height: 720px;
+        width: 1280px;
+      }
+
+      #game {
+        height: 720px;
+        width: 1280px;
+      }
+
+      #backgroundContainer {
+        display: flex;
+        flex-direction: column;
+        height: 720px;
+        width: 1280px;
+      }
+
+      #gameAnimationContainer {
+        position: absolute;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        height: 720px;
+        width: 1280px;
+        overflow: hidden;
+        scale: 1;
+        transform-origin: top left;
+      }
+
+      #allyContainer {
+        margin-left: 250px;
+        margin-bottom: 265px;
+      }
+
+      @keyframes animateMoveBackAllyContainer {
+        from {
+          transform: translateX(530px);
         }
 
-        #fullscreen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes animateMoveAllyContainer {
+        from {
+          transform: translateX(0);
         }
 
-        #fullscreen:not(.on) {
-            height: 720px;
-            width: 1280px;
+        to {
+          transform: translateX(530px);
+        }
+      }
+
+      #allyContainer.move {
+        transform: translateX(530px);
+        animation: animateMoveAllyContainer 700ms linear;
+      }
+
+      #allyContainer.move-back {
+        animation: animateMoveBackAllyContainer 700ms linear;
+      }
+
+      #enemyContainer {
+        transform: scaleX(-1);
+        margin-right: 250px;
+        margin-bottom: 265px;
+      }
+
+      @keyframes animateMoveBackEnemyContainer {
+        from {
+          transform: scaleX(-1) translateX(530px);
         }
 
-        #game {
-            height: 720px;
-            width: 1280px;
+        to {
+          transform: scaleX(-1) translateX(0);
+        }
+      }
+
+      @keyframes animateMoveEnemyContainer {
+        from {
+          transform: scaleX(-1) translateX(0);
         }
 
-        #backgroundContainer {
-            display: flex;
-            flex-direction: column;
-            height: 720px;
-            width: 1280px;
+        to {
+          transform: scaleX(-1) translateX(530px);
+        }
+      }
+
+      #enemyContainer.move {
+        transform: scaleX(-1) translateX(530px);
+        animation: animateMoveEnemyContainer 1000ms steps(25);
+      }
+
+      @keyframes animateMoveSlime {
+        0% {
+          transform: scaleX(-1);
         }
 
-        #gameAnimationContainer {
-            position: absolute;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            height: 720px;
-            width: 1280px;
-            overflow: hidden;
-            scale: 1;
-            transform-origin: top left;
+        28% {
+          transform: scaleX(-1) translateX(0);
         }
 
-
-        #allyContainer {
-            margin-left: 250px;
-            margin-bottom: 265px;
+        36% {
+          transform: scaleX(-1) translateX(112px);
         }
 
-        @keyframes animateMoveBackAllyContainer {
-            from {
-                transform: translateX(530px);
-            }
-
-            to {
-                transform: translateX(0);
-            }
+        47% {
+          transform: scaleX(-1) translateX(225px);
         }
 
-        @keyframes animateMoveAllyContainer {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(530px);
-            }
+        77% {
+          transform: scaleX(-1) translateX(225px);
         }
 
-        #allyContainer.move {
-            transform: translateX(530px);
-            animation: animateMoveAllyContainer 700ms linear;
+        87% {
+          transform: scaleX(-1) translateX(337px);
         }
 
-        #allyContainer.move-back {
-            animation: animateMoveBackAllyContainer 700ms linear;
+        100% {
+          transform: scaleX(-1) translateX(450px);
+        }
+      }
+
+      @keyframes animateMoveBackSlime {
+        0% {
+          transform: scaleX(-1) translateX(450px);
         }
 
-        #enemyContainer {
-            transform: scaleX(-1);
-            margin-right: 250px;
-            margin-bottom: 265px;
+        28% {
+          transform: scaleX(-1) translateX(450px);
         }
 
-        @keyframes animateMoveBackEnemyContainer {
-            from {
-                transform: scaleX(-1) translateX(530px);
-            }
-
-            to {
-                transform: scaleX(-1) translateX(0);
-            }
+        36% {
+          transform: scaleX(-1) translateX(338px);
         }
 
-        @keyframes animateMoveEnemyContainer {
-            from {
-                transform: scaleX(-1) translateX(0);
-            }
-
-            to {
-                transform: scaleX(-1) translateX(530px);
-            }
+        47% {
+          transform: scaleX(-1) translateX(225px);
         }
 
-        #enemyContainer.move {
-            transform: scaleX(-1) translateX(530px);
-            animation: animateMoveEnemyContainer 1000ms steps(25);
+        77% {
+          transform: scaleX(-1) translateX(225px);
         }
 
-        @keyframes animateMoveSlime {
-            0% {
-                transform: scaleX(-1);
-            }
-
-            28% {
-                transform: scaleX(-1) translateX(0);
-            }
-
-            36% {
-                transform: scaleX(-1) translateX(112px);
-            }
-
-            47% {
-                transform: scaleX(-1) translateX(225px);
-
-            }
-
-            77% {
-                transform: scaleX(-1) translateX(225px);
-
-            }
-
-            87% {
-                transform: scaleX(-1) translateX(337px);
-            }
-
-            100% {
-                transform: scaleX(-1) translateX(450px);
-            }
+        87% {
+          transform: scaleX(-1) translateX(113px);
         }
 
-        @keyframes animateMoveBackSlime {
-            0% {
-                transform: scaleX(-1) translateX(450px);
-            }
+        100% {
+          transform: scaleX(-1);
+        }
+      }
 
-            28% {
-                transform: scaleX(-1) translateX(450px);
-            }
+      #enemyContainer.move-slime {
+        transform: scaleX(-1) translateX(450px);
+        animation: animateMoveSlime 1400ms steps(10);
+      }
 
-            36% {
-                transform: scaleX(-1) translateX(338px);
-            }
+      #enemyContainer.move-back-slime {
+        transform: scaleX(-1);
+        animation: animateMoveBackSlime 1400ms steps(10);
+      }
 
-            47% {
-                transform: scaleX(-1) translateX(225px);
-
-            }
-
-            77% {
-                transform: scaleX(-1) translateX(225px);
-
-            }
-
-            87% {
-                transform: scaleX(-1) translateX(113px);
-            }
-
-            100% {
-                transform: scaleX(-1);
-            }
+      @keyframes animateMoveGolem {
+        from {
+          transform: scaleX(-1);
         }
 
-        #enemyContainer.move-slime {
-            transform: scaleX(-1) translateX(450px);
-            animation: animateMoveSlime 1400ms steps(10);
+        to {
+          transform: scaleX(-1) translateX(350px);
+        }
+      }
+
+      @keyframes animateMoveGolemAttack {
+        0% {
+          transform: scaleX(-1) translateX(350px);
         }
 
-        #enemyContainer.move-back-slime {
-            transform: scaleX(-1);
-            animation: animateMoveBackSlime 1400ms steps(10);
+        100% {
+          transform: scaleX(-1) translateX(520px);
+        }
+      }
+
+      @keyframes animateMoveBackGolem {
+        from {
+          transform: scaleX(-1) translateX(520px);
         }
 
-        @keyframes animateMoveGolem {
-            from {
-                transform: scaleX(-1);
-            }
+        to {
+          transform: scaleX(-1);
+        }
+      }
 
-            to {
-                transform: scaleX(-1) translateX(350px);
-            }
+      #enemyContainer.move-golem {
+        transform: scaleX(-1) translateX(350px);
+        animation: animateMoveGolem 1000ms steps(25);
+      }
+
+      #enemyContainer.move-golem-attack {
+        transform: scaleX(-1) translateX(520px);
+        animation: animateMoveGolemAttack 800ms steps(25);
+      }
+
+      #enemyContainer.move-back-golem {
+        transform: scaleX(-1);
+        animation: animateMoveBackGolem 1200ms steps(32);
+      }
+
+      @keyframes animateMoveJellyfish {
+        from {
+          transform: scaleX(-1) translateX(0);
+          translate: 0 0;
         }
 
-        @keyframes animateMoveGolemAttack {
-            0% {
-                transform: scaleX(-1) translateX(350px);
-            }
-
-            100% {
-                transform: scaleX(-1) translateX(520px);
-            }
+        50% {
+          translate: 0 -35px;
         }
 
-        @keyframes animateMoveBackGolem {
-            from {
-                transform: scaleX(-1) translateX(520px);
-            }
+        to {
+          transform: scaleX(-1) translateX(500px);
+          translate: 0 -50px;
+        }
+      }
 
-            to {
-                transform: scaleX(-1);
-            }
+      #enemyContainer.move-jellyfish {
+        transform: scaleX(-1) translateX(500px);
+        translate: 0 -50px;
+        animation: animateMoveJellyfish 1500ms linear;
+      }
+
+      @keyframes animateMoveBackJellyfish {
+        from {
+          transform: scaleX(-1) translateX(500px);
+          translate: 0 -50px;
         }
 
-        #enemyContainer.move-golem {
-            transform: scaleX(-1) translateX(350px);
-            animation: animateMoveGolem 1000ms steps(25);
+        50% {
+          translate: 0 -15px;
         }
 
-        #enemyContainer.move-golem-attack {
-            transform: scaleX(-1) translateX(520px);
-            animation: animateMoveGolemAttack 800ms steps(25);
+        to {
+          translate: 0 0;
+        }
+      }
+
+      #enemyContainer.move-back-jellyfish {
+        transform: scaleX(-1) translateX(0);
+        translate: 0 0;
+        animation: animateMoveBackJellyfish 1500ms linear;
+      }
+
+      @keyframes animateMoveSlimeBoss {
+        0% {
+          transform: scaleX(-1) translateX(0);
         }
 
-        #enemyContainer.move-back-golem {
-            transform: scaleX(-1);
-            animation: animateMoveBackGolem 1200ms steps(32);
+        25% {
+          transform: scaleX(-1) translateX(0);
         }
 
-        @keyframes animateMoveJellyfish {
-            from {
-                transform: scaleX(-1) translateX(0);
-                translate: 0 0;
-            }
+        90% {
+          transform: scaleX(-1) translateX(550px);
+        }
+      }
 
-            50% {
-                translate: 0 -35px;
-            }
+      #enemyContainer.move-slimeBoss {
+        transform: scaleX(-1) translateX(550px);
+        animation: animateMoveSlimeBoss 2000ms linear;
+      }
 
-            to {
-                transform: scaleX(-1) translateX(500px);
-                translate: 0 -50px;
-            }
+      @keyframes animateMoveBackSlimeBoss {
+        0% {
+          transform: scaleX(-1) translateX(550px);
         }
 
-        #enemyContainer.move-jellyfish {
-            transform: scaleX(-1) translateX(500px);
-            translate: 0 -50px;
-            animation: animateMoveJellyfish 1500ms linear;
+        25% {
+          transform: scaleX(-1) translateX(550px);
         }
 
-        @keyframes animateMoveBackJellyfish {
-            from {
-                transform: scaleX(-1) translateX(500px);
-                translate: 0 -50px;
-            }
+        90% {
+          transform: scaleX(-1) translateX(0);
+        }
+      }
 
-            50% {
-                translate: 0 -15px;
-            }
+      #enemyContainer.move-back-slimeBoss {
+        transform: scaleX(-1);
+        animation: animateMoveBackSlimeBoss 2000ms linear;
+      }
 
-            to {
-                translate: 0 0;
-            }
+      @keyframes animateMoveSkeleton {
+        from {
+          translate: 0;
         }
 
-        #enemyContainer.move-back-jellyfish {
-            transform: scaleX(-1) translateX(0);
-            translate: 0 0;
-            animation: animateMoveBackJellyfish 1500ms linear;
+        to {
+          translate: -500px;
+        }
+      }
+
+      #enemyContainer.move-skeleton {
+        translate: -500px;
+        animation: animateMoveSkeleton 1000ms linear;
+      }
+
+      @keyframes animateMoveBackSkeleton {
+        from {
+          translate: -500px;
         }
 
-        @keyframes animateMoveSlimeBoss {
-            0% {
-                transform: scaleX(-1) translateX(0);
-            }
-
-            25% {
-                transform: scaleX(-1) translateX(0);
-            }
-
-            90% {
-                transform: scaleX(-1) translateX(550px);
-            }
+        to {
+          translate: 0;
         }
+      }
 
-        #enemyContainer.move-slimeBoss {
-            transform: scaleX(-1) translateX(550px);
-            animation: animateMoveSlimeBoss 2000ms linear;
-        }
-
-        @keyframes animateMoveBackSlimeBoss {
-            0% {
-                transform: scaleX(-1) translateX(550px);
-            }
-
-            25% {
-                transform: scaleX(-1) translateX(550px);
-            }
-
-            90% {
-                transform: scaleX(-1) translateX(0);
-            }
-        }
-
-        #enemyContainer.move-back-slimeBoss {
-            transform: scaleX(-1);
-            animation: animateMoveBackSlimeBoss 2000ms linear;
-        }
-
-        @keyframes animateMoveSkeleton {
-            from {
-                translate: 0;
-            }
-
-            to {
-                translate: -500px;
-            }
-        }
-
-        #enemyContainer.move-skeleton {
-            translate: -500px;
-            animation: animateMoveSkeleton 1000ms linear;
-        }
-
-        @keyframes animateMoveBackSkeleton {
-            from {
-                translate: -500px;
-            }
-
-            to {
-                translate: 0;
-            }
-        }
-
-        #enemyContainer.move-back-skeleton {
-            translate: 0;
-            animation: animateMoveBackSkeleton 1000ms linear;
-        }
+      #enemyContainer.move-back-skeleton {
+        translate: 0;
+        animation: animateMoveBackSkeleton 1000ms linear;
+      }
     </style>
     <style id="knightStyle">
-        @keyframes knight-animate-bg {
-            from {
-                background-position: 0;
-            }
-
-            to {
-                background-position: -4200px;
-            }
+      @keyframes knight-animate-bg {
+        from {
+          background-position: 0;
         }
 
-        @keyframes knight-animate-atk {
+        to {
+          background-position: -4200px;
+        }
+      }
 
-            /* tambahan keyframe karena sprite attack nya ga pas */
-            from {
-                background-position: -168px;
-                /* start from frame 2 */
-            }
-
-            to {
-                background-position: -4368px;
-                /* end with frame 1 */
-            }
+      @keyframes knight-animate-atk {
+        /* tambahan keyframe karena sprite attack nya ga pas */
+        from {
+          background-position: -168px;
+          /* start from frame 2 */
         }
 
-        @keyframes knight-animate-damaged {
+        to {
+          background-position: -4368px;
+          /* end with frame 1 */
+        }
+      }
 
-            /* tambahan keyframe karena sprite attack nya ga pas */
-            from {
-                background-position: -336px;
-                /* start from frame 2 */
-            }
-
-            to {
-                background-position: -4536px;
-                /* end with frame 1 */
-            }
+      @keyframes knight-animate-damaged {
+        /* tambahan keyframe karena sprite attack nya ga pas */
+        from {
+          background-position: -336px;
+          /* start from frame 2 */
         }
 
-        @keyframes knight-animate-shocked {
+        to {
+          background-position: -4536px;
+          /* end with frame 1 */
+        }
+      }
 
-            /* tambahan keyframe karena sprite attack nya ga pas */
-            0% {
-                background-position: -336px;
-                /* start from frame 2 */
-            }
-
-            30% {
-                background-position: -4536px;
-                /* end with frame 1 */
-            }
-
-            35% {
-                scale: 1 1;
-            }
-
-            45% {
-                scale: 0.9 1.02;
-            }
-
-            55% {
-                scale: 1 1;
-            }
-
-            65% {
-                scale: 0.9 1.02;
-            }
-
-            75% {
-                scale: 1 1;
-                background-position: -4536px;
-            }
+      @keyframes knight-animate-shocked {
+        /* tambahan keyframe karena sprite attack nya ga pas */
+        0% {
+          background-position: -336px;
+          /* start from frame 2 */
         }
 
-        @keyframes knight-animate-died {
-            from {
-                background-position: -336px;
-                opacity: 1;
-            }
-
-            60% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 0;
-            }
-
-            75% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 0;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 0;
-            }
-
-            95% {
-                opacity: 1;
-            }
-
-            to {
-                background-position: -4200px;
-                opacity: 0;
-            }
+        30% {
+          background-position: -4536px;
+          /* end with frame 1 */
         }
 
-        #knight>div {
-            position: absolute;
-            width: 168px;
-            height: 225px;
-            transform: translateY(-225px);
-            opacity: 0;
-            pointer-events: none;
+        35% {
+          scale: 1 1;
         }
 
-        #knight>.idle {
-            background-image: url('./assets/Character/Knight/knight_idle.png');
+        45% {
+          scale: 0.9 1.02;
         }
 
-        #knight>.walk {
-            background-image: url('./assets/Character/Knight/knight_walk.png');
+        55% {
+          scale: 1 1;
         }
 
-        #knight>.attack {
-            background-image: url('./assets/Character/Knight/knight_attack.png');
+        65% {
+          scale: 0.9 1.02;
         }
 
-        #knight>.damaged {
-            background-image: url('./assets/Character/Knight/knight_damaged.png');
+        75% {
+          scale: 1 1;
+          background-position: -4536px;
+        }
+      }
+
+      @keyframes knight-animate-died {
+        from {
+          background-position: -336px;
+          opacity: 1;
         }
 
-        #knight>.died {
-            background-image: url('./assets/Character/Knight/knight_died.png');
+        60% {
+          opacity: 1;
         }
 
-        #knight[data-animate="idle"]>.idle {
-            opacity: 1;
-            animation: knight-animate-bg 1000ms steps(25) infinite;
+        70% {
+          opacity: 0;
         }
 
-        #knight[data-animate="walk"]>.walk {
-            opacity: 1;
-            animation: knight-animate-bg 250ms steps(25) infinite;
+        75% {
+          opacity: 1;
         }
 
-        #knight[data-animate="damaged"]>.damaged {
-            opacity: 1;
-            animation: knight-animate-damaged 200ms steps(25);
-            background-position: -336px;
+        80% {
+          opacity: 0;
         }
 
-        #knight[data-animate="attack"]>.attack {
-            animation: knight-animate-atk 300ms steps(25);
-            background-position: -168px;
-            opacity: 1;
+        85% {
+          opacity: 1;
         }
 
-        #knight[data-animate="shocked"]>.damaged {
-            opacity: 1;
-            animation: knight-animate-shocked 800ms steps(25);
-            background-position: -336px;
+        90% {
+          opacity: 0;
         }
 
-        #knight[data-animate="died"]>.died {
-            background-position: -4200px;
-            animation: knight-animate-died 1000ms steps(23);
+        95% {
+          opacity: 1;
         }
+
+        to {
+          background-position: -4200px;
+          opacity: 0;
+        }
+      }
+
+      #knight > div {
+        position: absolute;
+        width: 168px;
+        height: 225px;
+        transform: translateY(-225px);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #knight > .idle {
+        background-image: url("./assets/Character/Knight/knight_idle.png");
+      }
+
+      #knight > .walk {
+        background-image: url("./assets/Character/Knight/knight_walk.png");
+      }
+
+      #knight > .attack {
+        background-image: url("./assets/Character/Knight/knight_attack.png");
+      }
+
+      #knight > .damaged {
+        background-image: url("./assets/Character/Knight/knight_damaged.png");
+      }
+
+      #knight > .died {
+        background-image: url("./assets/Character/Knight/knight_died.png");
+      }
+
+      #knight[data-animate="idle"] > .idle {
+        opacity: 1;
+        animation: knight-animate-bg 1000ms steps(25) infinite;
+      }
+
+      #knight[data-animate="walk"] > .walk {
+        opacity: 1;
+        animation: knight-animate-bg 250ms steps(25) infinite;
+      }
+
+      #knight[data-animate="damaged"] > .damaged {
+        opacity: 1;
+        animation: knight-animate-damaged 200ms steps(25);
+        background-position: -336px;
+      }
+
+      #knight[data-animate="attack"] > .attack {
+        animation: knight-animate-atk 300ms steps(25);
+        background-position: -168px;
+        opacity: 1;
+      }
+
+      #knight[data-animate="shocked"] > .damaged {
+        opacity: 1;
+        animation: knight-animate-shocked 800ms steps(25);
+        background-position: -336px;
+      }
+
+      #knight[data-animate="died"] > .died {
+        background-position: -4200px;
+        animation: knight-animate-died 1000ms steps(23);
+      }
     </style>
     <style id="slimeStyle">
-        @keyframes slime-animate-bg {
-            from {
-                background-position: 0;
-            }
-
-            to {
-                background-position: -2800px;
-            }
+      @keyframes slime-animate-bg {
+        from {
+          background-position: 0;
         }
 
-        @keyframes slime-animate-jump {
-            0% {
-                background-position: 0;
-            }
+        to {
+          background-position: -2800px;
+        }
+      }
 
-            20% {
-                transform: translateY(-98px);
-            }
-
-            55% {
-                transform: translateY(-100px);
-            }
-
-            65% {
-                transform: translateY(-200px);
-            }
-
-            75% {
-                transform: translateY(-220px);
-            }
-
-            95% {
-                transform: translateY(-102px);
-            }
-
-            100% {
-                background-position: -2800px;
-                transform: translateY(-102px);
-            }
+      @keyframes slime-animate-jump {
+        0% {
+          background-position: 0;
         }
 
-        @keyframes slime-animate-jump-fliped {
-            0% {
-                background-position: 0;
-                transform: scaleX(-1) translateY(-98px);
-            }
-
-            20% {
-                transform: scaleX(-1) translateY(-98px);
-            }
-
-            55% {
-                transform: scaleX(-1) translateY(-100px);
-            }
-
-            65% {
-                transform: scaleX(-1) translateY(-200px);
-            }
-
-            75% {
-                transform: scaleX(-1) translateY(-220px);
-            }
-
-            95% {
-                transform: scaleX(-1) translateY(-102px);
-            }
-
-            100% {
-                background-position: -2800px;
-                transform: scaleX(-1) translateY(-102px);
-            }
+        20% {
+          transform: translateY(-98px);
         }
 
-        @keyframes slime-animate-damaged {
-            from {
-                background-position: -1568px;
-            }
-
-            to {
-                background-position: -4368px;
-            }
+        55% {
+          transform: translateY(-100px);
         }
 
-        @keyframes slime-animate-attack {
-            0% {
-                background-position: -112px;
-                transform: translateY(-102px);
-            }
-
-            30% {
-                transform: translateY(-102px) translateX(0);
-            }
-
-            45% {
-                transform: translateY(-220px) translateX(100px);
-            }
-
-            80% {
-                transform: translateY(-102px) translateX(0);
-            }
-
-            100% {
-                background-position: -2912px;
-                transform: translateY(-102px);
-            }
+        65% {
+          transform: translateY(-200px);
         }
 
-        @keyframes slime-animate-died {
-            from {
-                background-position: 0;
-                opacity: 1;
-            }
-
-            60% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 0;
-            }
-
-            75% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 0;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 0;
-            }
-
-            95% {
-                opacity: 1;
-            }
-
-
-            to {
-                opacity: 0;
-                background-position: -2800px;
-            }
+        75% {
+          transform: translateY(-220px);
         }
 
-        #slime>div {
-            position: absolute;
-            width: 112px;
-            height: 102px;
-            transform: translateY(-102px);
-            opacity: 0;
-            pointer-events: none;
+        95% {
+          transform: translateY(-102px);
         }
 
-        #slime>.idle {
-            background-image: url('./assets/Character/Slime/slime_idle.png');
+        100% {
+          background-position: -2800px;
+          transform: translateY(-102px);
+        }
+      }
+
+      @keyframes slime-animate-jump-fliped {
+        0% {
+          background-position: 0;
+          transform: scaleX(-1) translateY(-98px);
         }
 
-        #slime>.walk {
-            background-image: url('./assets/Character/Slime/slime_walk.png');
+        20% {
+          transform: scaleX(-1) translateY(-98px);
         }
 
-        #slime>.attack {
-            background-image: url('./assets/Character/Slime/slime_attack.png');
+        55% {
+          transform: scaleX(-1) translateY(-100px);
         }
 
-        #slime>.damaged {
-            background-image: url('./assets/Character/Slime/slime_damaged.png');
+        65% {
+          transform: scaleX(-1) translateY(-200px);
         }
 
-        #slime>.died {
-            background-image: url('./assets/Character/Slime/slime_died.png');
+        75% {
+          transform: scaleX(-1) translateY(-220px);
         }
 
-        #slime[data-animate="idle"]>.idle {
-            opacity: 1;
-            animation: slime-animate-bg 1000ms steps(25) infinite;
+        95% {
+          transform: scaleX(-1) translateY(-102px);
         }
 
-        #slime[data-animate="attack"]>.attack {
-            opacity: 1;
-            animation: slime-animate-attack 500ms steps(25);
+        100% {
+          background-position: -2800px;
+          transform: scaleX(-1) translateY(-102px);
+        }
+      }
+
+      @keyframes slime-animate-damaged {
+        from {
+          background-position: -1568px;
         }
 
-        #slime[data-animate="walk"]>.walk {
-            opacity: 1;
-            animation: slime-animate-jump 700ms steps(25) infinite;
+        to {
+          background-position: -4368px;
+        }
+      }
+
+      @keyframes slime-animate-attack {
+        0% {
+          background-position: -112px;
+          transform: translateY(-102px);
         }
 
-        #slime[data-animate="walk_fliped"]>.walk {
-            opacity: 1;
-            animation: slime-animate-jump-fliped 700ms steps(25) infinite;
+        30% {
+          transform: translateY(-102px) translateX(0);
         }
 
-        #slime[data-animate="damaged"]>.damaged {
-            opacity: 1;
-            background-position: -1568px;
-            animation: slime-animate-damaged 300ms steps(25);
+        45% {
+          transform: translateY(-220px) translateX(100px);
         }
 
-        #slime[data-animate="died"]>.died {
-            animation: slime-animate-died 1000ms steps(25);
+        80% {
+          transform: translateY(-102px) translateX(0);
         }
+
+        100% {
+          background-position: -2912px;
+          transform: translateY(-102px);
+        }
+      }
+
+      @keyframes slime-animate-died {
+        from {
+          background-position: 0;
+          opacity: 1;
+        }
+
+        60% {
+          opacity: 1;
+        }
+
+        70% {
+          opacity: 0;
+        }
+
+        75% {
+          opacity: 1;
+        }
+
+        80% {
+          opacity: 0;
+        }
+
+        85% {
+          opacity: 1;
+        }
+
+        90% {
+          opacity: 0;
+        }
+
+        95% {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+          background-position: -2800px;
+        }
+      }
+
+      #slime > div {
+        position: absolute;
+        width: 112px;
+        height: 102px;
+        transform: translateY(-102px);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #slime > .idle {
+        background-image: url("./assets/Character/Slime/slime_idle.png");
+      }
+
+      #slime > .walk {
+        background-image: url("./assets/Character/Slime/slime_walk.png");
+      }
+
+      #slime > .attack {
+        background-image: url("./assets/Character/Slime/slime_attack.png");
+      }
+
+      #slime > .damaged {
+        background-image: url("./assets/Character/Slime/slime_damaged.png");
+      }
+
+      #slime > .died {
+        background-image: url("./assets/Character/Slime/slime_died.png");
+      }
+
+      #slime[data-animate="idle"] > .idle {
+        opacity: 1;
+        animation: slime-animate-bg 1000ms steps(25) infinite;
+      }
+
+      #slime[data-animate="attack"] > .attack {
+        opacity: 1;
+        animation: slime-animate-attack 500ms steps(25);
+      }
+
+      #slime[data-animate="walk"] > .walk {
+        opacity: 1;
+        animation: slime-animate-jump 700ms steps(25) infinite;
+      }
+
+      #slime[data-animate="walk_fliped"] > .walk {
+        opacity: 1;
+        animation: slime-animate-jump-fliped 700ms steps(25) infinite;
+      }
+
+      #slime[data-animate="damaged"] > .damaged {
+        opacity: 1;
+        background-position: -1568px;
+        animation: slime-animate-damaged 300ms steps(25);
+      }
+
+      #slime[data-animate="died"] > .died {
+        animation: slime-animate-died 1000ms steps(25);
+      }
     </style>
     <style id="golemStyle">
-        @keyframes golem-animate-bg {
-            from {
-                background-position: 0;
-            }
-
-            to {
-                background-position: -4275px;
-            }
+      @keyframes golem-animate-bg {
+        from {
+          background-position: 0;
         }
 
-        @keyframes golem-animate-attack {
-            0% {
-                background-position: 0;
-                transform: translateY(-125px);
-            }
+        to {
+          background-position: -4275px;
+        }
+      }
 
-            15% {
-                transform: translateY(-325px);
-            }
-
-            25% {
-                transform: translateY(-375px);
-            }
-
-            45% {
-                transform: translateY(-325px);
-            }
-
-            60% {
-                transform: translateY(-125px);
-            }
-
-            100% {
-                background-position: -4275px;
-            }
+      @keyframes golem-animate-attack {
+        0% {
+          background-position: 0;
+          transform: translateY(-125px);
         }
 
-        @keyframes golem-animate-died {
-            from {
-                background-position: -342px;
-                opacity: 1;
-            }
-
-            60% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 0;
-            }
-
-            75% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 0;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 0;
-            }
-
-            95% {
-                opacity: 1;
-            }
-
-
-            to {
-                opacity: 0;
-                background-position: -3420px;
-            }
+        15% {
+          transform: translateY(-325px);
         }
 
-        #golem>div {
-            position: absolute;
-            width: 171px;
-            height: 125px;
-            transform: translateY(-125px);
-            opacity: 0;
-            pointer-events: none;
+        25% {
+          transform: translateY(-375px);
         }
 
-        #golem>.idle {
-            background-image: url('./assets/Character/Golem/golem_idle.png');
+        45% {
+          transform: translateY(-325px);
         }
 
-        #golem>.walk {
-            background-image: url('./assets/Character/Golem/golem_walk.png');
+        60% {
+          transform: translateY(-125px);
         }
 
-        #golem>.attack {
-            background-image: url('./assets/Character/Golem/golem_attack.png');
+        100% {
+          background-position: -4275px;
+        }
+      }
+
+      @keyframes golem-animate-died {
+        from {
+          background-position: -342px;
+          opacity: 1;
         }
 
-        #golem>.damaged {
-            background-image: url('./assets/Character/Golem/golem_damaged.png');
+        60% {
+          opacity: 1;
         }
 
-        #golem>.died {
-            background-image: url('./assets/Character/Golem/golem_died.png');
+        70% {
+          opacity: 0;
         }
 
-        #golem[data-animate="idle"]>.idle {
-            opacity: 1;
-            animation: golem-animate-bg 1000ms steps(25) infinite;
+        75% {
+          opacity: 1;
         }
 
-        #golem[data-animate="walk"]>.walk {
-            opacity: 1;
-            animation: golem-animate-bg 350ms steps(25) infinite;
+        80% {
+          opacity: 0;
         }
 
-        #golem[data-animate="walk_fliped"]>.walk {
-            opacity: 1;
-            transform: scaleX(-1) translateY(-125px);
-            animation: golem-animate-bg 350ms steps(25) infinite;
+        85% {
+          opacity: 1;
         }
 
-        #golem[data-animate="attack"]>.attack {
-            opacity: 1;
-            animation: golem-animate-attack 1500ms steps(25);
+        90% {
+          opacity: 0;
         }
 
-        #golem[data-animate="damaged"]>.damaged {
-            opacity: 1;
-            animation: golem-animate-bg 200ms steps(25);
+        95% {
+          opacity: 1;
         }
 
-        #golem[data-animate="died"]>.died {
-            animation: golem-animate-died 1000ms steps(18);
+        to {
+          opacity: 0;
+          background-position: -3420px;
         }
+      }
+
+      #golem > div {
+        position: absolute;
+        width: 171px;
+        height: 125px;
+        transform: translateY(-125px);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #golem > .idle {
+        background-image: url("./assets/Character/Golem/golem_idle.png");
+      }
+
+      #golem > .walk {
+        background-image: url("./assets/Character/Golem/golem_walk.png");
+      }
+
+      #golem > .attack {
+        background-image: url("./assets/Character/Golem/golem_attack.png");
+      }
+
+      #golem > .damaged {
+        background-image: url("./assets/Character/Golem/golem_damaged.png");
+      }
+
+      #golem > .died {
+        background-image: url("./assets/Character/Golem/golem_died.png");
+      }
+
+      #golem[data-animate="idle"] > .idle {
+        opacity: 1;
+        animation: golem-animate-bg 1000ms steps(25) infinite;
+      }
+
+      #golem[data-animate="walk"] > .walk {
+        opacity: 1;
+        animation: golem-animate-bg 350ms steps(25) infinite;
+      }
+
+      #golem[data-animate="walk_fliped"] > .walk {
+        opacity: 1;
+        transform: scaleX(-1) translateY(-125px);
+        animation: golem-animate-bg 350ms steps(25) infinite;
+      }
+
+      #golem[data-animate="attack"] > .attack {
+        opacity: 1;
+        animation: golem-animate-attack 1500ms steps(25);
+      }
+
+      #golem[data-animate="damaged"] > .damaged {
+        opacity: 1;
+        animation: golem-animate-bg 200ms steps(25);
+      }
+
+      #golem[data-animate="died"] > .died {
+        animation: golem-animate-died 1000ms steps(18);
+      }
     </style>
     <style id="jellyfishStyle">
-        @keyframes jellyfish-animate-bg {
-            0% {
-                background-position: 0;
-                scale: 1 1;
-            }
-
-            50% {
-                scale: 0.92 1;
-                background-position: -3950px;
-            }
-
-            100% {
-                background-position: -7900px;
-                scale: 1 1;
-
-            }
+      @keyframes jellyfish-animate-bg {
+        0% {
+          background-position: 0;
+          scale: 1 1;
         }
 
-        @keyframes jellyfish-animate-attack {
-            0% {
-                rotate: 0deg;
-                translate: 0 0;
-            }
-
-            5% {
-                background-position: 0;
-                rotate: -20deg;
-            }
-
-            10% {
-                rotate: -45deg;
-                translate: 0 -15px;
-                scale: 1.2 1;
-            }
-
-            15% {
-                translate: 0 -20px;
-            }
-
-            20% {
-                translate: 0 -15px;
-            }
-
-            25% {
-                translate: 20px 0;
-                scale: 1.1 1;
-            }
-
-            40% {
-                background-position: -3950px;
-                scale: 1 1.3;
-            }
-
-            50% {
-                scale: 1.1 1;
-            }
-
-            65% {
-                scale: 1 1;
-            }
-
-            70% {
-                scale: 1.1 1;
-            }
-
-            80% {
-                scale: 1 1;
-            }
-
-            85% {
-                translate: 20px 0;
-            }
-
-            90% {
-                translate: 0 -15px;
-                scale: 1.1 1.2;
-            }
-
-            95% {
-                rotate: -45deg;
-                translate: 0 -30px;
-            }
-
-            100% {
-                rotate: 0deg;
-                translate: 0 -30px;
-                background-position: -3950px;
-            }
+        50% {
+          scale: 0.92 1;
+          background-position: -3950px;
         }
 
-        @keyframes jellyfish-animate-walk {
-            0% {
-                background-position: 0;
-                scale: 1 1;
-            }
+        100% {
+          background-position: -7900px;
+          scale: 1 1;
+        }
+      }
 
-            25% {
-                scale: 0.95 1;
-            }
-
-            50% {
-                scale: 1 1;
-            }
-
-            75% {
-                scale: 0.95 1;
-            }
-
-            100% {
-                scale: 1 1;
-                background-position: -3950px;
-            }
+      @keyframes jellyfish-animate-attack {
+        0% {
+          rotate: 0deg;
+          translate: 0 0;
         }
 
-        @keyframes jellyfish-animate-damaged {
-            0% {
-                background-position: 0;
-                scale: 1 1;
-                translate: 0;
-                rotate: 0;
-            }
-
-            20% {
-                scale: 1 0.8;
-                translate: -6px;
-                rotate: -3deg;
-            }
-
-            50% {
-                scale: 0.92 1;
-                background-position: -3950px;
-                translate: 0;
-                rotate: 0;
-            }
-
-            100% {
-                background-position: -7900px;
-                scale: 1 1;
-
-            }
+        5% {
+          background-position: 0;
+          rotate: -20deg;
         }
 
-        @keyframes jellyfish-animate-died {
-            from {
-                translate: 0 0;
-                background-position: -316px;
-                opacity: 1;
-            }
-
-            60% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 0;
-            }
-
-            75% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 0;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 0;
-            }
-
-            95% {
-                opacity: 1;
-            }
-
-
-            to {
-                opacity: 0;
-                translate: 0 30px;
-                background-position: -3950px;
-            }
+        10% {
+          rotate: -45deg;
+          translate: 0 -15px;
+          scale: 1.2 1;
         }
 
-
-        #jellyfish>div {
-            position: absolute;
-            height: 169px;
-            width: 158px;
-            transform: translateY(-200px);
-            opacity: 0;
-            pointer-events: none;
+        15% {
+          translate: 0 -20px;
         }
 
-        #jellyfish>.idle {
-            background-image: url('./assets/Character/Jellyfish/jellyfish_Idle.png');
+        20% {
+          translate: 0 -15px;
         }
 
-        #jellyfish>.walk {
-            background-image: url('./assets/Character/Jellyfish/jellyfish_walk.png');
+        25% {
+          translate: 20px 0;
+          scale: 1.1 1;
         }
 
-        #jellyfish>.attack {
-            background-image: url('./assets/Character/Jellyfish/jellyfish_attack.png');
-            scale: 1.2;
-            translate: 0 35px;
+        40% {
+          background-position: -3950px;
+          scale: 1 1.3;
         }
 
-        #jellyfish>.damaged {
-            background-image: url('./assets/Character/Jellyfish/jellyfish_damaged.png');
+        50% {
+          scale: 1.1 1;
         }
 
-        #jellyfish>.died {
-            background-image: url('./assets/Character/Jellyfish/jellyfish_died.png');
+        65% {
+          scale: 1 1;
         }
 
-        #jellyfish[data-animate="idle"]>.idle {
-            opacity: 1;
-            animation: jellyfish-animate-bg 2500ms steps(25) infinite;
+        70% {
+          scale: 1.1 1;
         }
 
-        #jellyfish[data-animate="walk"]>.walk {
-            opacity: 1;
-            rotate: 3deg;
-            animation: jellyfish-animate-walk 700ms steps(25) infinite;
+        80% {
+          scale: 1 1;
         }
 
-        #jellyfish[data-animate="walk-back"]>.walk {
-            opacity: 1;
-            rotate: -3deg;
-            animation: jellyfish-animate-walk 700ms steps(25) infinite;
+        85% {
+          translate: 20px 0;
         }
 
-        #jellyfish[data-animate="attack"]>.attack {
-            opacity: 1;
-            rotate: 0deg;
-            transform-origin: 50% -100px;
-            translate: 0 -30px;
-            animation: jellyfish-animate-attack 1000ms steps(25);
+        90% {
+          translate: 0 -15px;
+          scale: 1.1 1.2;
         }
 
-        #jellyfish[data-animate="damaged"]>.damaged {
-            opacity: 1;
-            transform-origin: 50% -100px;
-            animation: jellyfish-animate-damaged 600ms steps(25) infinite;
+        95% {
+          rotate: -45deg;
+          translate: 0 -30px;
         }
 
-        #jellyfish[data-animate="died"]>.died {
-            translate: 0 30px;
-            animation: jellyfish-animate-died 1000ms steps(23);
+        100% {
+          rotate: 0deg;
+          translate: 0 -30px;
+          background-position: -3950px;
         }
+      }
+
+      @keyframes jellyfish-animate-walk {
+        0% {
+          background-position: 0;
+          scale: 1 1;
+        }
+
+        25% {
+          scale: 0.95 1;
+        }
+
+        50% {
+          scale: 1 1;
+        }
+
+        75% {
+          scale: 0.95 1;
+        }
+
+        100% {
+          scale: 1 1;
+          background-position: -3950px;
+        }
+      }
+
+      @keyframes jellyfish-animate-damaged {
+        0% {
+          background-position: 0;
+          scale: 1 1;
+          translate: 0;
+          rotate: 0;
+        }
+
+        20% {
+          scale: 1 0.8;
+          translate: -6px;
+          rotate: -3deg;
+        }
+
+        50% {
+          scale: 0.92 1;
+          background-position: -3950px;
+          translate: 0;
+          rotate: 0;
+        }
+
+        100% {
+          background-position: -7900px;
+          scale: 1 1;
+        }
+      }
+
+      @keyframes jellyfish-animate-died {
+        from {
+          translate: 0 0;
+          background-position: -316px;
+          opacity: 1;
+        }
+
+        60% {
+          opacity: 1;
+        }
+
+        70% {
+          opacity: 0;
+        }
+
+        75% {
+          opacity: 1;
+        }
+
+        80% {
+          opacity: 0;
+        }
+
+        85% {
+          opacity: 1;
+        }
+
+        90% {
+          opacity: 0;
+        }
+
+        95% {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+          translate: 0 30px;
+          background-position: -3950px;
+        }
+      }
+
+      #jellyfish > div {
+        position: absolute;
+        height: 169px;
+        width: 158px;
+        transform: translateY(-200px);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #jellyfish > .idle {
+        background-image: url("./assets/Character/Jellyfish/jellyfish_Idle.png");
+      }
+
+      #jellyfish > .walk {
+        background-image: url("./assets/Character/Jellyfish/jellyfish_walk.png");
+      }
+
+      #jellyfish > .attack {
+        background-image: url("./assets/Character/Jellyfish/jellyfish_attack.png");
+        scale: 1.2;
+        translate: 0 35px;
+      }
+
+      #jellyfish > .damaged {
+        background-image: url("./assets/Character/Jellyfish/jellyfish_damaged.png");
+      }
+
+      #jellyfish > .died {
+        background-image: url("./assets/Character/Jellyfish/jellyfish_died.png");
+      }
+
+      #jellyfish[data-animate="idle"] > .idle {
+        opacity: 1;
+        animation: jellyfish-animate-bg 2500ms steps(25) infinite;
+      }
+
+      #jellyfish[data-animate="walk"] > .walk {
+        opacity: 1;
+        rotate: 3deg;
+        animation: jellyfish-animate-walk 700ms steps(25) infinite;
+      }
+
+      #jellyfish[data-animate="walk-back"] > .walk {
+        opacity: 1;
+        rotate: -3deg;
+        animation: jellyfish-animate-walk 700ms steps(25) infinite;
+      }
+
+      #jellyfish[data-animate="attack"] > .attack {
+        opacity: 1;
+        rotate: 0deg;
+        transform-origin: 50% -100px;
+        translate: 0 -30px;
+        animation: jellyfish-animate-attack 1000ms steps(25);
+      }
+
+      #jellyfish[data-animate="damaged"] > .damaged {
+        opacity: 1;
+        transform-origin: 50% -100px;
+        animation: jellyfish-animate-damaged 600ms steps(25) infinite;
+      }
+
+      #jellyfish[data-animate="died"] > .died {
+        translate: 0 30px;
+        animation: jellyfish-animate-died 1000ms steps(23);
+      }
     </style>
     <style id="skeletonStyle">
-        @keyframes skeleton-animate-bg {
-            from {
-                background-position: 0;
-            }
-
-            to {
-                background-position: -4550px;
-            }
+      @keyframes skeleton-animate-bg {
+        from {
+          background-position: 0;
         }
 
-        @keyframes skeleton-animate-atk {
-            from {
-                background-position: -364px;
-            }
+        to {
+          background-position: -4550px;
+        }
+      }
 
-            to {
-                background-position: -4550px;
-            }
+      @keyframes skeleton-animate-atk {
+        from {
+          background-position: -364px;
         }
 
-        @keyframes skeleton-animate-died {
-            from {
-                background-position: -364px;
-                opacity: 1;
-            }
+        to {
+          background-position: -4550px;
+        }
+      }
 
-            60% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 0;
-            }
-
-            75% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 0;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 0;
-            }
-
-            95% {
-                opacity: 1;
-            }
-
-
-            to {
-                opacity: 0;
-                background-position: -4550px;
-            }
+      @keyframes skeleton-animate-died {
+        from {
+          background-position: -364px;
+          opacity: 1;
         }
 
-        #skeleton>div {
-            position: absolute;
-            height: 181px;
-            width: 182px;
-            transform: translateY(-181px);
-            opacity: 0;
-            pointer-events: none;
+        60% {
+          opacity: 1;
         }
 
-        #skeleton>.idle {
-            background-image: url('./assets/Character/Skeleton/Skeleton_Idle.png');
+        70% {
+          opacity: 0;
         }
 
-        #skeleton>.walk {
-            background-image: url('./assets/Character/Skeleton/Skeleton_Walk.png');
+        75% {
+          opacity: 1;
         }
 
-        #skeleton>.attack {
-            background-image: url('./assets/Character/Skeleton/Skeleton_Attack.png');
+        80% {
+          opacity: 0;
         }
 
-        #skeleton>.damaged {
-            background-image: url('./assets/Character/Skeleton/Skeleton_Damaged.png');
+        85% {
+          opacity: 1;
         }
 
-        #skeleton>.died {
-            background-image: url('./assets/Character/Skeleton/Skeleton_Died.png');
+        90% {
+          opacity: 0;
         }
 
-        #skeleton[data-animate="idle"]>.idle {
-            opacity: 1;
-            animation: skeleton-animate-bg 1000ms steps(25) infinite;
+        95% {
+          opacity: 1;
         }
 
-        #skeleton[data-animate="walk"]>.walk {
-            opacity: 1;
-            animation: skeleton-animate-bg 300ms steps(25) infinite;
+        to {
+          opacity: 0;
+          background-position: -4550px;
         }
+      }
 
-        #skeleton[data-animate="walk_fliped"]>.walk {
-            opacity: 1;
-            scale: -1 1;
-            translate: -60px;
-            animation: skeleton-animate-bg 300ms steps(25) infinite;
-        }
+      #skeleton > div {
+        position: absolute;
+        height: 181px;
+        width: 182px;
+        transform: translateY(-181px);
+        opacity: 0;
+        pointer-events: none;
+      }
 
-        #skeleton[data-animate="attack"]>.attack {
-            opacity: 1;
-            background-position: 0;
-            animation: skeleton-animate-atk 300ms steps(23);
-        }
+      #skeleton > .idle {
+        background-image: url("./assets/Character/Skeleton/Skeleton_Idle.png");
+      }
 
-        #skeleton[data-animate="damaged"]>.damaged {
-            opacity: 1;
-            animation: skeleton-animate-bg 500ms steps(25);
-        }
+      #skeleton > .walk {
+        background-image: url("./assets/Character/Skeleton/Skeleton_Walk.png");
+      }
 
-        #skeleton[data-animate="died"]>.died {
-            animation: skeleton-animate-died 1000ms steps(23);
-        }
+      #skeleton > .attack {
+        background-image: url("./assets/Character/Skeleton/Skeleton_Attack.png");
+      }
+
+      #skeleton > .damaged {
+        background-image: url("./assets/Character/Skeleton/Skeleton_Damaged.png");
+      }
+
+      #skeleton > .died {
+        background-image: url("./assets/Character/Skeleton/Skeleton_Died.png");
+      }
+
+      #skeleton[data-animate="idle"] > .idle {
+        opacity: 1;
+        animation: skeleton-animate-bg 1000ms steps(25) infinite;
+      }
+
+      #skeleton[data-animate="walk"] > .walk {
+        opacity: 1;
+        animation: skeleton-animate-bg 300ms steps(25) infinite;
+      }
+
+      #skeleton[data-animate="walk_fliped"] > .walk {
+        opacity: 1;
+        scale: -1 1;
+        translate: -60px;
+        animation: skeleton-animate-bg 300ms steps(25) infinite;
+      }
+
+      #skeleton[data-animate="attack"] > .attack {
+        opacity: 1;
+        background-position: 0;
+        animation: skeleton-animate-atk 300ms steps(23);
+      }
+
+      #skeleton[data-animate="damaged"] > .damaged {
+        opacity: 1;
+        animation: skeleton-animate-bg 500ms steps(25);
+      }
+
+      #skeleton[data-animate="died"] > .died {
+        animation: skeleton-animate-died 1000ms steps(23);
+      }
     </style>
     <style id="slimeBossStyle">
-        @keyframes slimeBoss-animate-bg {
-            0% {
-                background-position: 0;
-            }
-
-            100% {
-                background-position: -3025px;
-            }
+      @keyframes slimeBoss-animate-bg {
+        0% {
+          background-position: 0;
         }
 
-        @keyframes slimeBoss-animate-attack {
-            0% {
-                background-position: 0;
-            }
+        100% {
+          background-position: -3025px;
+        }
+      }
 
-            5% {
-                scale: 1 0.8;
-            }
-
-            25% {
-                scale: 1 0.8;
-                translate: 0 0;
-            }
-
-            30% {
-                scale: 1 1;
-                translate: 0 -150px;
-            }
-
-            40% {
-                translate: 0 -240px;
-            }
-
-            50% {
-                translate: 0 -250px;
-            }
-
-            60% {
-                translate: 0 -240px;
-            }
-
-            85% {
-                scale: 1 1;
-                translate: 0 -160px;
-            }
-
-            90% {
-                scale: 1 0.7;
-                translate: 0 0;
-            }
-
-            100% {
-                background-position: -3025px;
-            }
+      @keyframes slimeBoss-animate-attack {
+        0% {
+          background-position: 0;
         }
 
-        @keyframes slimeBoss-animate-jump-back {
-            0% {
-                background-position: 0;
-            }
-
-            5% {
-                scale: -1 0.8;
-            }
-
-            25% {
-                scale: -1 0.8;
-                translate: 0 0;
-            }
-
-            30% {
-                scale: -1 1;
-                translate: 0 -150px;
-            }
-
-            40% {
-                translate: 0 -240px;
-            }
-
-            50% {
-                translate: 0 -250px;
-            }
-
-            60% {
-                translate: 0 -240px;
-            }
-
-            85% {
-                scale: -1 1;
-                translate: 0 -160px;
-            }
-
-            90% {
-                scale: -1 0.7;
-                translate: 0 0;
-            }
-
-            100% {
-                background-position: -3025px;
-            }
+        5% {
+          scale: 1 0.8;
         }
 
-        @keyframes slimeBoss-animate-damaged {
-            from {
-                background-position: -847px;
-            }
-
-            to {
-                background-position: -3388px;
-            }
+        25% {
+          scale: 1 0.8;
+          translate: 0 0;
         }
 
-        @keyframes slimeBoss-animate-died {
-            from {
-                background-position: -484px;
-                opacity: 1;
-            }
-
-            60% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 0;
-            }
-
-            75% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 0;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 0;
-            }
-
-            95% {
-                opacity: 1;
-            }
-
-
-            to {
-                opacity: 0;
-                background-position: -3025px;
-            }
+        30% {
+          scale: 1 1;
+          translate: 0 -150px;
         }
 
-        #slimeBoss>div {
-            position: absolute;
-            height: 133px;
-            width: 121px;
-            transform: translateY(-160px) scale(1.5);
-            opacity: 0;
-            pointer-events: none;
+        40% {
+          translate: 0 -240px;
         }
 
-        #slimeBoss>.idle {
-            background-image: url('./assets/Character/SlimeBoss/SlimeBoss_Idle.png');
+        50% {
+          translate: 0 -250px;
         }
 
-        #slimeBoss>.damaged {
-            background-image: url('./assets/Character/SlimeBoss/SlimeBoss_Damaged.png');
+        60% {
+          translate: 0 -240px;
         }
 
-        #slimeBoss>.died {
-            background-image: url('./assets/Character/SlimeBoss/SlimeBoss_Died.png');
+        85% {
+          scale: 1 1;
+          translate: 0 -160px;
         }
 
-        #slimeBoss[data-animate="idle"]>.idle {
-            opacity: 1;
-            animation: slimeBoss-animate-bg 1500ms steps(25) infinite;
+        90% {
+          scale: 1 0.7;
+          translate: 0 0;
         }
 
-        #slimeBoss[data-animate="attack"]>.idle {
-            opacity: 1;
-            animation: slimeBoss-animate-attack 2000ms steps(25);
+        100% {
+          background-position: -3025px;
+        }
+      }
+
+      @keyframes slimeBoss-animate-jump-back {
+        0% {
+          background-position: 0;
         }
 
-        #slimeBoss[data-animate="jump-back"]>.idle {
-            opacity: 1;
-            scale: -1 1;
-            animation: slimeBoss-animate-jump-back 2000ms steps(25);
+        5% {
+          scale: -1 0.8;
         }
 
-        #slimeBoss[data-animate="damaged"]>.damaged {
-            opacity: 1;
-            background-position: -363px;
-            animation: slimeBoss-animate-damaged 200ms steps(21);
+        25% {
+          scale: -1 0.8;
+          translate: 0 0;
         }
 
-        #slimeBoss[data-animate="died"]>.died {
-            opacity: 0;
-            animation: slimeBoss-animate-died 1000ms steps(21);
+        30% {
+          scale: -1 1;
+          translate: 0 -150px;
         }
+
+        40% {
+          translate: 0 -240px;
+        }
+
+        50% {
+          translate: 0 -250px;
+        }
+
+        60% {
+          translate: 0 -240px;
+        }
+
+        85% {
+          scale: -1 1;
+          translate: 0 -160px;
+        }
+
+        90% {
+          scale: -1 0.7;
+          translate: 0 0;
+        }
+
+        100% {
+          background-position: -3025px;
+        }
+      }
+
+      @keyframes slimeBoss-animate-damaged {
+        from {
+          background-position: -847px;
+        }
+
+        to {
+          background-position: -3388px;
+        }
+      }
+
+      @keyframes slimeBoss-animate-died {
+        from {
+          background-position: -484px;
+          opacity: 1;
+        }
+
+        60% {
+          opacity: 1;
+        }
+
+        70% {
+          opacity: 0;
+        }
+
+        75% {
+          opacity: 1;
+        }
+
+        80% {
+          opacity: 0;
+        }
+
+        85% {
+          opacity: 1;
+        }
+
+        90% {
+          opacity: 0;
+        }
+
+        95% {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+          background-position: -3025px;
+        }
+      }
+
+      #slimeBoss > div {
+        position: absolute;
+        height: 133px;
+        width: 121px;
+        transform: translateY(-160px) scale(1.5);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #slimeBoss > .idle {
+        background-image: url("./assets/Character/SlimeBoss/SlimeBoss_Idle.png");
+      }
+
+      #slimeBoss > .damaged {
+        background-image: url("./assets/Character/SlimeBoss/SlimeBoss_Damaged.png");
+      }
+
+      #slimeBoss > .died {
+        background-image: url("./assets/Character/SlimeBoss/SlimeBoss_Died.png");
+      }
+
+      #slimeBoss[data-animate="idle"] > .idle {
+        opacity: 1;
+        animation: slimeBoss-animate-bg 1500ms steps(25) infinite;
+      }
+
+      #slimeBoss[data-animate="attack"] > .idle {
+        opacity: 1;
+        animation: slimeBoss-animate-attack 2000ms steps(25);
+      }
+
+      #slimeBoss[data-animate="jump-back"] > .idle {
+        opacity: 1;
+        scale: -1 1;
+        animation: slimeBoss-animate-jump-back 2000ms steps(25);
+      }
+
+      #slimeBoss[data-animate="damaged"] > .damaged {
+        opacity: 1;
+        background-position: -363px;
+        animation: slimeBoss-animate-damaged 200ms steps(21);
+      }
+
+      #slimeBoss[data-animate="died"] > .died {
+        opacity: 0;
+        animation: slimeBoss-animate-died 1000ms steps(21);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="game-container">
-        <!-- Game field -->
-        <div class="game-field">
-            <!-- Player info -->
-            <div class="player-info-container">
-                <div class="player-avatar">
-                    <!-- <img
-              src="resources/images/character/Spider-Man.png"
-              class="player-sprite"
-              loading="lazy"
-              alt="Player sprite"
-            /> -->
-                </div>
-                <div class="player-stats ui-box">
-                    <div class="player-name">Player</div>
-                    <div class="hp-bar">
-                        <div class="hp-text">100/100</div>
-                    </div>
-                </div>
+      <!-- Game field -->
+      <div class="game-field">
+        <!-- Player info -->
+        <div class="player-info-container">
+          <div class="player-avatar"></div>
+          <div class="player-stats ui-box">
+            <div class="player-name">Player</div>
+            <div class="hp-bar">
+              <div class="hp-bar-fill"></div>
+              <div class="hp-text">100/100</div>
             </div>
-
-            <!-- Enemy info -->
-            <div class="enemy-info-container">
-                <div class="enemy-stats ui-box">
-                    <div class="enemy-name">Slime</div>
-                    <div class="hp-bar">
-                        <div class="hp-text">100/100</div>
-                    </div>
-                </div>
-                <div class="enemy-avatar"></div>
-            </div>
-
-            <!-- Mana bar -->
-            <!-- <div
-          class="mana-bar"
-          style="position: absolute; left: 20px; top: 110px"
-        >
-          <div class="mana-text">10/100</div>
-        </div> -->
-
-            <!-- Wave indicator -->
-            <div class="wave-indicator">Wave 1</div>
-
-            <div id="gameAnimationContainer">
-                <div id="allyContainer">
-                    <div id="knight" data-animate="idle">
-                        <div class="idle"></div>
-                        <div class="walk"></div>
-                        <div class="attack"></div>
-                        <div class="damaged"></div>
-                        <div class="died"></div>
-                    </div>
-                </div>
-                <div id="enemyContainer" class="">
-                    <div id="slime" data-animate="">
-                        <div class="idle"></div>
-                        <div class="walk"></div>
-                        <div class="attack"></div>
-                        <div class="damaged"></div>
-                        <div class="died"></div>
-                    </div>
-                    <div id="golem" data-animate="">
-                        <div class="idle"></div>
-                        <div class="walk"></div>
-                        <div class="attack"></div>
-                        <div class="damaged"></div>
-                        <div class="died"></div>
-                    </div>
-                    <div id="jellyfish" data-animate="">
-                        <div class="idle"></div>
-                        <div class="walk"></div>
-                        <div class="attack"></div>
-                        <div class="damaged"></div>
-                        <div class="died"></div>
-                    </div>
-                    <div id="skeleton" data-animate="">
-                        <div class="idle"></div>
-                        <div class="walk"></div>
-                        <div class="attack"></div>
-                        <div class="damaged"></div>
-                        <div class="died"></div>
-                    </div>
-                    <div id="slimeBoss" data-animate="">
-                        <div class="idle"></div>
-                        <div class="walk"></div>
-                        <div class="attack"></div>
-                        <div class="damaged"></div>
-                        <div class="died"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Biome background -->
-            <div class="biome-background"></div>
-        </div>
-
-        <div class="question-container">
-            <div class="question">1+1=?</div>
-            <!-- <div class="options-container">
-          <div class="options">
-            <div class="option option-1">1</div>
-            <div class="option option-2">4</div>
-            <div class="option option-3">8</div>
-            <div class="option option-4">2</div>
           </div>
-        </div> -->
-
-            <div class="stats-container">
-                <div class="correct-answer">
-                    <span class="stat-text">Benar!</span>
-                </div>
-                <!-- <div class="wrong-answer">
-            <span class="stat-text">Salah!</span>
-          </div> -->
-                <!-- <div class="wave-cleared">
-            <span class="stat-text">Wave clear!</span>
-          </div> -->
-            </div>
         </div>
+
+        <!-- Enemy info -->
+        <div class="enemy-info-container">
+          <div class="enemy-stats ui-box">
+            <div class="enemy-name">Slime</div>
+            <div class="hp-bar">
+              <div class="hp-bar-fill"></div>
+              <div class="hp-text">100/100</div>
+            </div>
+          </div>
+          <div class="enemy-avatar"></div>
+        </div>
+
+        <!-- Mana bar -->
+        <!-- <div
+            class="mana-bar"
+            style="position: absolute; left: 20px; top: 110px"
+            >
+                <div class="mana-text">10/100</div>
+            </div> -->
+
+        <!-- Wave indicator -->
+        <div class="wave-indicator">Wave 1</div>
+
+        <div id="gameAnimationContainer">
+          <div id="allyContainer">
+            <div
+              id="knight"
+              data-animate="idle"
+            >
+              <div class="idle"></div>
+              <div class="walk"></div>
+              <div class="attack"></div>
+              <div class="damaged"></div>
+              <div class="died"></div>
+            </div>
+          </div>
+          <div
+            id="enemyContainer"
+            class=""
+          >
+            <div
+              id="slime"
+              data-animate=""
+            >
+              <div class="idle"></div>
+              <div class="walk"></div>
+              <div class="attack"></div>
+              <div class="damaged"></div>
+              <div class="died"></div>
+            </div>
+            <div
+              id="golem"
+              data-animate=""
+            >
+              <div class="idle"></div>
+              <div class="walk"></div>
+              <div class="attack"></div>
+              <div class="damaged"></div>
+              <div class="died"></div>
+            </div>
+            <div
+              id="jellyfish"
+              data-animate=""
+            >
+              <div class="idle"></div>
+              <div class="walk"></div>
+              <div class="attack"></div>
+              <div class="damaged"></div>
+              <div class="died"></div>
+            </div>
+            <div
+              id="skeleton"
+              data-animate=""
+            >
+              <div class="idle"></div>
+              <div class="walk"></div>
+              <div class="attack"></div>
+              <div class="damaged"></div>
+              <div class="died"></div>
+            </div>
+            <div
+              id="slimeBoss"
+              data-animate=""
+            >
+              <div class="idle"></div>
+              <div class="walk"></div>
+              <div class="attack"></div>
+              <div class="damaged"></div>
+              <div class="died"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Biome background -->
+        <div class="biome-background"></div>
+      </div>
+
+      <div class="question-container">
+        <div class="question">1+1=?</div>
+        <!-- <div class="options-container">
+                <div class="options">
+                    <div class="option option-1">1</div>
+                    <div class="option option-2">4</div>
+                    <div class="option option-3">8</div>
+                    <div class="option option-4">2</div>
+                </div>
+            </div> -->
+
+        <div class="stats-container">
+          <div class="correct-answer">
+            <span class="stat-text">Benar!</span>
+          </div>
+          <!-- <div class="wrong-answer">
+                    <span class="stat-text">Salah!</span>
+                </div> -->
+          <!-- <div class="wave-cleared">
+                    <span class="stat-text">Wave clear!</span>
+                </div> -->
+        </div>
+      </div>
     </div>
     <button id="knightAtkBtn">knight attack</button>
     <button id="slimeAtkBtn">slime attack</button>
@@ -1578,180 +1596,211 @@
     <button id="slimeBossAtkBtn">slimeBoss attack</button>
     <button id="requestFullscreen">fullscreen</button>
 
-    <script type="text/Javascript" src="resources/javascript/game-ui.js"></script>
+    <script
+      type="text/Javascript"
+      src="resources/javascript/game-ui.js"
+    ></script>
     <script>
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+      function delay(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        let $allyContainer = document.getElementById("allyContainer");
+        let $knight = document.getElementById("knight");
+        async function animateKnightAttack(enemyElement) {
+          $allyContainer.classList.add("move", "z-100");
+          $knight.dataset.animate = "walk";
+          await delay(700);
+          $knight.dataset.animate = "idle";
+          await delay(100);
+          $knight.dataset.animate = "attack";
+          await delay(200);
+          enemyElement.dataset.animate = "damaged";
+          await delay(300);
+          enemyElement.dataset.animate = "idle";
+          $knight.dataset.animate = "walk";
+          $allyContainer.classList.replace("move", "move-back");
+          await delay(700);
+          $knight.dataset.animate = "idle";
+          $allyContainer.classList.remove("move-back", "z-100");
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            let $allyContainer = document.getElementById('allyContainer');
-            let $knight = document.getElementById('knight');
-            async function animateKnightAttack(enemyElement) {
-                $allyContainer.classList.add('move', 'z-100');
-                $knight.dataset.animate = 'walk';
-                await delay(700);
-                $knight.dataset.animate = 'idle';
-                await delay(100);
-                $knight.dataset.animate = 'attack';
-                await delay(200);
-                enemyElement.dataset.animate = 'damaged';
-                await delay(300);
-                enemyElement.dataset.animate = 'idle';
-                $knight.dataset.animate = 'walk';
-                $allyContainer.classList.replace('move', 'move-back');
-                await delay(700);
-                $knight.dataset.animate = 'idle';
-                $allyContainer.classList.remove('move-back', 'z-100');
-            }
 
-            let $enemyContainer = document.getElementById('enemyContainer');
-            let $slime = document.getElementById('slime');
+        let $enemyContainer = document.getElementById("enemyContainer");
+        let $slime = document.getElementById("slime");
 
-            async function animateSlimeAttack() {
-                $enemyContainer.classList.add('move-slime');
-                $slime.dataset.animate = 'walk';
-                await delay(1400);
-                $slime.dataset.animate = 'idle';
-                await delay(200);
-                $slime.dataset.animate = 'attack';
-                await delay(210);
-                $knight.dataset.animate = 'damaged';
-                await delay(280)
-                $slime.dataset.animate = 'idle';
-                $knight.dataset.animate = 'idle';
-                await delay(100);
-                $enemyContainer.classList.replace('move-slime', 'move-back-slime');
-                $slime.dataset.animate = 'walk_fliped';
-                await delay(1700)
-                $slime.dataset.animate = 'idle';
-                $enemyContainer.classList.remove('move-back-slime');
-            }
+        async function animateSlimeAttack() {
+          $enemyContainer.classList.add("move-slime");
+          $slime.dataset.animate = "walk";
+          await delay(1400);
+          $slime.dataset.animate = "idle";
+          await delay(200);
+          $slime.dataset.animate = "attack";
+          await delay(210);
+          $knight.dataset.animate = "damaged";
+          await delay(280);
+          $slime.dataset.animate = "idle";
+          $knight.dataset.animate = "idle";
+          await delay(100);
+          $enemyContainer.classList.replace("move-slime", "move-back-slime");
+          $slime.dataset.animate = "walk_fliped";
+          await delay(1700);
+          $slime.dataset.animate = "idle";
+          $enemyContainer.classList.remove("move-back-slime");
+        }
 
-            let $golem = document.getElementById('golem');
+        let $golem = document.getElementById("golem");
 
-            async function animateGolemAttack() {
-                $enemyContainer.classList.add('move-golem');
-                $golem.dataset.animate = 'walk';
-                await delay(1030);
-                $golem.dataset.animate = 'idle';
-                await delay(200);
-                $enemyContainer.classList.replace('move-golem', 'move-golem-attack');
-                $golem.dataset.animate = 'attack';
-                await delay(900);
-                $knight.dataset.animate = 'damaged';
-                await delay(200);
-                $knight.dataset.animate = 'idle';
-                $golem.dataset.animate = "idle";
-                await delay(300);
-                $golem.dataset.animate = 'walk_fliped';
-                $enemyContainer.classList.replace('move-golem-attack', 'move-back-golem');
-                await delay(1200);
-                $enemyContainer.classList.remove('move-back-golem');
-                $golem.dataset.animate = 'idle';
-            }
+        async function animateGolemAttack() {
+          $enemyContainer.classList.add("move-golem");
+          $golem.dataset.animate = "walk";
+          await delay(1030);
+          $golem.dataset.animate = "idle";
+          await delay(200);
+          $enemyContainer.classList.replace("move-golem", "move-golem-attack");
+          $golem.dataset.animate = "attack";
+          await delay(900);
+          $knight.dataset.animate = "damaged";
+          await delay(200);
+          $knight.dataset.animate = "idle";
+          $golem.dataset.animate = "idle";
+          await delay(300);
+          $golem.dataset.animate = "walk_fliped";
+          $enemyContainer.classList.replace(
+            "move-golem-attack",
+            "move-back-golem"
+          );
+          await delay(1200);
+          $enemyContainer.classList.remove("move-back-golem");
+          $golem.dataset.animate = "idle";
+        }
 
-            let $jellyfish = document.getElementById('jellyfish');
+        let $jellyfish = document.getElementById("jellyfish");
 
-            async function animateJellyfishAttack() {
-                $jellyfish.dataset.animate = 'walk';
-                $enemyContainer.classList.add('move-jellyfish');
-                await delay(1600);
-                $jellyfish.dataset.animate = 'idle';
-                await delay(200);
-                $jellyfish.dataset.animate = 'attack';
-                await delay(200);
-                $knight.dataset.animate = 'shocked';
-                await delay(800);
-                $jellyfish.dataset.animate = 'idle';
-                $knight.dataset.animate = 'idle';
-                await delay(200);
-                $jellyfish.dataset.animate = 'walk-back';
-                $enemyContainer.classList.replace('move-jellyfish', 'move-back-jellyfish');
-                await delay(1500);
-                $jellyfish.dataset.animate = 'idle';
-                $enemyContainer.classList.remove('move-back-jellyfish');
-            }
+        async function animateJellyfishAttack() {
+          $jellyfish.dataset.animate = "walk";
+          $enemyContainer.classList.add("move-jellyfish");
+          await delay(1600);
+          $jellyfish.dataset.animate = "idle";
+          await delay(200);
+          $jellyfish.dataset.animate = "attack";
+          await delay(200);
+          $knight.dataset.animate = "shocked";
+          await delay(800);
+          $jellyfish.dataset.animate = "idle";
+          $knight.dataset.animate = "idle";
+          await delay(200);
+          $jellyfish.dataset.animate = "walk-back";
+          $enemyContainer.classList.replace(
+            "move-jellyfish",
+            "move-back-jellyfish"
+          );
+          await delay(1500);
+          $jellyfish.dataset.animate = "idle";
+          $enemyContainer.classList.remove("move-back-jellyfish");
+        }
 
-            let $skeleton = document.getElementById('skeleton');
+        let $skeleton = document.getElementById("skeleton");
 
-            async function animateSkeletonAttack() {
-                $skeleton.dataset.animate = 'walk';
-                $enemyContainer.classList.add('move-skeleton');
-                await delay(1000);
-                $skeleton.dataset.animate = 'idle';
-                await delay(200);
-                $skeleton.dataset.animate = 'attack';
-                await delay(160)
-                $knight.dataset.animate = 'damaged';
-                await delay(110);
-                $skeleton.dataset.animate = 'idle';
-                await delay(90);
-                $knight.dataset.animate = 'idle';
-                await delay(200);
-                $skeleton.dataset.animate = 'walk_fliped'
-                $enemyContainer.classList.replace('move-skeleton', 'move-back-skeleton');
-                await delay(1000);
-                $skeleton.dataset.animate = 'idle';
-                $enemyContainer.classList.remove('move-back-skeleton')
-            }
+        async function animateSkeletonAttack() {
+          $skeleton.dataset.animate = "walk";
+          $enemyContainer.classList.add("move-skeleton");
+          await delay(1000);
+          $skeleton.dataset.animate = "idle";
+          await delay(200);
+          $skeleton.dataset.animate = "attack";
+          await delay(160);
+          $knight.dataset.animate = "damaged";
+          await delay(110);
+          $skeleton.dataset.animate = "idle";
+          await delay(90);
+          $knight.dataset.animate = "idle";
+          await delay(200);
+          $skeleton.dataset.animate = "walk_fliped";
+          $enemyContainer.classList.replace(
+            "move-skeleton",
+            "move-back-skeleton"
+          );
+          await delay(1000);
+          $skeleton.dataset.animate = "idle";
+          $enemyContainer.classList.remove("move-back-skeleton");
+        }
 
-            let $slimeBoss = document.getElementById('slimeBoss');
+        let $slimeBoss = document.getElementById("slimeBoss");
 
-            async function animateSlimeBossAttack() {
-                $slimeBoss.dataset.animate = 'attack';
-                $enemyContainer.classList.add('move-slimeBoss');
-                await delay(1800);
-                $knight.dataset.animate = 'damaged';
-                await delay(200);
-                $knight.dataset.animate = 'idle';
-                $slimeBoss.dataset.animate = 'idle';
-                await delay(200);
-                $slimeBoss.dataset.animate = 'jump-back';
-                $enemyContainer.classList.replace('move-slimeBoss', 'move-back-slimeBoss');
-                await delay(2000);
-                $slimeBoss.dataset.animate = 'idle';
-                $enemyContainer.classList.remove('move-back-slimeBoss');
-            }
+        async function animateSlimeBossAttack() {
+          $slimeBoss.dataset.animate = "attack";
+          $enemyContainer.classList.add("move-slimeBoss");
+          await delay(1800);
+          $knight.dataset.animate = "damaged";
+          await delay(200);
+          $knight.dataset.animate = "idle";
+          $slimeBoss.dataset.animate = "idle";
+          await delay(200);
+          $slimeBoss.dataset.animate = "jump-back";
+          $enemyContainer.classList.replace(
+            "move-slimeBoss",
+            "move-back-slimeBoss"
+          );
+          await delay(2000);
+          $slimeBoss.dataset.animate = "idle";
+          $enemyContainer.classList.remove("move-back-slimeBoss");
+        }
 
-            document.getElementById('knightAtkBtn').addEventListener('click', function () {
-                animateKnightAttack(document.querySelector('#enemyContainer>[data-animate="idle"]'));
-            });
-            document.getElementById('slimeAtkBtn').addEventListener('click', function () {
-                animateSlimeAttack();
-            });
-            document.getElementById('golemAtkBtn').addEventListener('click', function () {
-                animateGolemAttack();
-            })
-            document.getElementById('jellyfishAtkBtn').addEventListener('click', function () {
-                animateJellyfishAttack();
-            })
-            document.getElementById('skeletonAtkBtn').addEventListener('click', function () {
-                animateSkeletonAttack();
-            })
-            document.getElementById('slimeBossAtkBtn').addEventListener('click', function () {
-                animateSlimeBossAttack();
-            })
+        document
+          .getElementById("knightAtkBtn")
+          .addEventListener("click", function () {
+            animateKnightAttack(
+              document.querySelector('#enemyContainer>[data-animate="idle"]')
+            );
+          });
+        document
+          .getElementById("slimeAtkBtn")
+          .addEventListener("click", function () {
+            animateSlimeAttack();
+          });
+        document
+          .getElementById("golemAtkBtn")
+          .addEventListener("click", function () {
+            animateGolemAttack();
+          });
+        document
+          .getElementById("jellyfishAtkBtn")
+          .addEventListener("click", function () {
+            animateJellyfishAttack();
+          });
+        document
+          .getElementById("skeletonAtkBtn")
+          .addEventListener("click", function () {
+            animateSkeletonAttack();
+          });
+        document
+          .getElementById("slimeBossAtkBtn")
+          .addEventListener("click", function () {
+            animateSlimeBossAttack();
+          });
 
-
-
-            let $fullscreenDiv = document.getElementById('fullscreen');
-            let $game = document.getElementById('game');
-            document.getElementById('requestFullscreen').addEventListener('click', function () {
-                $fullscreenDiv.requestFullscreen();
-                $fullscreenDiv.classList.add('on');
-                setTimeout(() => {
-                    const scale = Math.min($fullscreenDiv.offsetWidth / 1280, $fullscreenDiv.offsetHeight / 720);
-                    $game.style.scale = scale;
-                }, 50);
-            })
-            document.addEventListener("fullscreenchange", () => {
-                if (!document.fullscreenElement) {
-                    $fullscreenDiv.classList.remove('on');
-                    $game.style.scale = 1;
-                }
-            });
-        })
+        let $fullscreenDiv = document.getElementById("fullscreen");
+        let $game = document.getElementById("game");
+        document
+          .getElementById("requestFullscreen")
+          .addEventListener("click", function () {
+            $fullscreenDiv.requestFullscreen();
+            $fullscreenDiv.classList.add("on");
+            setTimeout(() => {
+              const scale = Math.min(
+                $fullscreenDiv.offsetWidth / 1280,
+                $fullscreenDiv.offsetHeight / 720
+              );
+              $game.style.scale = scale;
+            }, 50);
+          });
+        document.addEventListener("fullscreenchange", () => {
+          if (!document.fullscreenElement) {
+            $fullscreenDiv.classList.remove("on");
+            $game.style.scale = 1;
+          }
+        });
+      });
     </script>
-</body>
-
+  </body>
 </html>
