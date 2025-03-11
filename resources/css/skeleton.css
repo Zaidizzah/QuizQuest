@@ -1,0 +1,120 @@
+@keyframes skeleton-animate-bg {
+    from {
+        background-position: 0;
+    }
+
+    to {
+        background-position: -4550px;
+    }
+}
+
+@keyframes skeleton-animate-atk {
+    from {
+        background-position: -364px;
+    }
+
+    to {
+        background-position: -4550px;
+    }
+}
+
+@keyframes skeleton-animate-died {
+    from {
+        background-position: -364px;
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        background-position: -4550px;
+    }
+}
+
+#skeleton>div {
+    position: absolute;
+    height: 181px;
+    width: 182px;
+    transform: translateY(-181px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#skeleton>.idle {
+    background-image: url("/assets/Character/Skeleton/Skeleton_Idle.png");
+}
+
+#skeleton>.walk {
+    background-image: url("/assets/Character/Skeleton/Skeleton_Walk.png");
+}
+
+#skeleton>.attack {
+    background-image: url("/assets/Character/Skeleton/Skeleton_Attack.png");
+}
+
+#skeleton>.damaged {
+    background-image: url("/assets/Character/Skeleton/Skeleton_Damaged.png");
+}
+
+#skeleton>.died {
+    background-image: url("/assets/Character/Skeleton/Skeleton_Died.png");
+}
+
+#skeleton[data-animate="idle"]>.idle {
+    opacity: 1;
+    animation: skeleton-animate-bg 1000ms steps(25) infinite;
+}
+
+#skeleton[data-animate="walk"]>.walk {
+    opacity: 1;
+    animation: skeleton-animate-bg 300ms steps(25) infinite;
+}
+
+#skeleton[data-animate="walk_fliped"]>.walk {
+    opacity: 1;
+    scale: -1 1;
+    translate: -60px;
+    animation: skeleton-animate-bg 300ms steps(25) infinite;
+}
+
+#skeleton[data-animate="attack"]>.attack {
+    opacity: 1;
+    background-position: 0;
+    animation: skeleton-animate-atk 300ms steps(23);
+}
+
+#skeleton[data-animate="damaged"]>.damaged {
+    opacity: 1;
+    animation: skeleton-animate-bg 500ms steps(25);
+}
+
+#skeleton[data-animate="died"]>.died {
+    animation: skeleton-animate-died 1000ms steps(23);
+}

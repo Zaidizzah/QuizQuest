@@ -90,10 +90,7 @@ body {
   flex-wrap: wrap;
 }
 
-.splash-screen
-  .splash-screen-content
-  .splash-screen-logo-container
-  img.splash-screen-logo {
+.splash-screen .splash-screen-content .splash-screen-logo-container img.splash-screen-logo {
   width: 100%;
   height: auto;
   max-width: 350px;
@@ -211,7 +208,6 @@ body {
 .hp-bar-fill {
   position: absolute;
   top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
   background-color: var(--red);
@@ -224,12 +220,10 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(213, 213, 213, 0.2) 20%,
-    rgba(255, 255, 255, 0) 80%
-  );
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(213, 213, 213, 0.2) 20%,
+      rgba(255, 255, 255, 0) 80%);
 }
 
 .hp-text {
@@ -261,12 +255,10 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.2) 20%,
-    rgba(255, 255, 255, 0) 80%
-  );
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0) 80%);
 }
 
 .mana-text {

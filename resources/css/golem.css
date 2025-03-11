@@ -1,0 +1,135 @@
+@keyframes golem-animate-bg {
+    from {
+        background-position: 0;
+    }
+
+    to {
+        background-position: -4275px;
+    }
+}
+
+@keyframes golem-animate-attack {
+    0% {
+        background-position: 0;
+        transform: translateY(-125px);
+    }
+
+    15% {
+        transform: translateY(-325px);
+    }
+
+    25% {
+        transform: translateY(-375px);
+    }
+
+    45% {
+        transform: translateY(-325px);
+    }
+
+    60% {
+        transform: translateY(-125px);
+    }
+
+    100% {
+        background-position: -4275px;
+    }
+}
+
+@keyframes golem-animate-died {
+    from {
+        background-position: -342px;
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        background-position: -3420px;
+    }
+}
+
+#golem>div {
+    position: absolute;
+    width: 171px;
+    height: 125px;
+    transform: translateY(-125px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#golem>.idle {
+    background-image: url("/assets/Character/Golem/golem_idle.png");
+}
+
+#golem>.walk {
+    background-image: url("/assets/Character/Golem/golem_walk.png");
+}
+
+#golem>.attack {
+    background-image: url("/assets/Character/Golem/golem_attack.png");
+}
+
+#golem>.damaged {
+    background-image: url("/assets/Character/Golem/golem_damaged.png");
+}
+
+#golem>.died {
+    background-image: url("/assets/Character/Golem/golem_died.png");
+}
+
+#golem[data-animate="idle"]>.idle {
+    opacity: 1;
+    animation: golem-animate-bg 1000ms steps(25) infinite;
+}
+
+#golem[data-animate="walk"]>.walk {
+    opacity: 1;
+    animation: golem-animate-bg 350ms steps(25) infinite;
+}
+
+#golem[data-animate="walk_fliped"]>.walk {
+    opacity: 1;
+    transform: scaleX(-1) translateY(-125px);
+    animation: golem-animate-bg 350ms steps(25) infinite;
+}
+
+#golem[data-animate="attack"]>.attack {
+    opacity: 1;
+    animation: golem-animate-attack 1500ms steps(25);
+}
+
+#golem[data-animate="damaged"]>.damaged {
+    opacity: 1;
+    animation: golem-animate-bg 200ms steps(25);
+}
+
+#golem[data-animate="died"]>.died {
+    animation: golem-animate-died 1000ms steps(18);
+}

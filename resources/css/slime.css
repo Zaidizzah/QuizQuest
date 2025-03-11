@@ -1,0 +1,205 @@
+@keyframes slime-animate-bg {
+    from {
+        background-position: 0;
+    }
+
+    to {
+        background-position: -2800px;
+    }
+}
+
+@keyframes slime-animate-jump {
+    0% {
+        background-position: 0;
+    }
+
+    20% {
+        transform: translateY(-98px);
+    }
+
+    55% {
+        transform: translateY(-100px);
+    }
+
+    65% {
+        transform: translateY(-200px);
+    }
+
+    75% {
+        transform: translateY(-220px);
+    }
+
+    95% {
+        transform: translateY(-102px);
+    }
+
+    100% {
+        background-position: -2800px;
+        transform: translateY(-102px);
+    }
+}
+
+@keyframes slime-animate-jump-fliped {
+    0% {
+        background-position: 0;
+        transform: scaleX(-1) translateY(-98px);
+    }
+
+    20% {
+        transform: scaleX(-1) translateY(-98px);
+    }
+
+    55% {
+        transform: scaleX(-1) translateY(-100px);
+    }
+
+    65% {
+        transform: scaleX(-1) translateY(-200px);
+    }
+
+    75% {
+        transform: scaleX(-1) translateY(-220px);
+    }
+
+    95% {
+        transform: scaleX(-1) translateY(-102px);
+    }
+
+    100% {
+        background-position: -2800px;
+        transform: scaleX(-1) translateY(-102px);
+    }
+}
+
+@keyframes slime-animate-damaged {
+    from {
+        background-position: -1568px;
+    }
+
+    to {
+        background-position: -4368px;
+    }
+}
+
+@keyframes slime-animate-attack {
+    0% {
+        background-position: -112px;
+        transform: translateY(-102px);
+    }
+
+    30% {
+        transform: translateY(-102px) translateX(0);
+    }
+
+    45% {
+        transform: translateY(-220px) translateX(100px);
+    }
+
+    80% {
+        transform: translateY(-102px) translateX(0);
+    }
+
+    100% {
+        background-position: -2912px;
+        transform: translateY(-102px);
+    }
+}
+
+@keyframes slime-animate-died {
+    from {
+        background-position: 0;
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        background-position: -2800px;
+    }
+}
+
+#slime>div {
+    position: absolute;
+    width: 112px;
+    height: 102px;
+    transform: translateY(-102px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#slime>.idle {
+    background-image: url("/assets/Character/Slime/slime_idle.png");
+}
+
+#slime>.walk {
+    background-image: url("/assets/Character/Slime/slime_walk.png");
+}
+
+#slime>.attack {
+    background-image: url("/assets/Character/Slime/slime_attack.png");
+}
+
+#slime>.damaged {
+    background-image: url("/assets/Character/Slime/slime_damaged.png");
+}
+
+#slime>.died {
+    background-image: url("/assets/Character/Slime/slime_died.png");
+}
+
+#slime[data-animate="idle"]>.idle {
+    opacity: 1;
+    animation: slime-animate-bg 1000ms steps(25) infinite;
+}
+
+#slime[data-animate="attack"]>.attack {
+    opacity: 1;
+    animation: slime-animate-attack 500ms steps(25);
+}
+
+#slime[data-animate="walk"]>.walk {
+    opacity: 1;
+    animation: slime-animate-jump 700ms steps(25) infinite;
+}
+
+#slime[data-animate="walk_fliped"]>.walk {
+    opacity: 1;
+    animation: slime-animate-jump-fliped 700ms steps(25) infinite;
+}
+
+#slime[data-animate="damaged"]>.damaged {
+    opacity: 1;
+    background-position: -1568px;
+    animation: slime-animate-damaged 300ms steps(25);
+}
+
+#slime[data-animate="died"]>.died {
+    animation: slime-animate-died 1000ms steps(25);
+}

@@ -1,0 +1,199 @@
+@keyframes slimeBoss-animate-bg {
+    0% {
+        background-position: 0;
+    }
+
+    100% {
+        background-position: -3025px;
+    }
+}
+
+@keyframes slimeBoss-animate-attack {
+    0% {
+        background-position: 0;
+    }
+
+    5% {
+        scale: 1 0.8;
+    }
+
+    25% {
+        scale: 1 0.8;
+        translate: 0 0;
+    }
+
+    30% {
+        scale: 1 1;
+        translate: 0 -150px;
+    }
+
+    40% {
+        translate: 0 -240px;
+    }
+
+    50% {
+        translate: 0 -250px;
+    }
+
+    60% {
+        translate: 0 -240px;
+    }
+
+    85% {
+        scale: 1 1;
+        translate: 0 -160px;
+    }
+
+    90% {
+        scale: 1 0.7;
+        translate: 0 0;
+    }
+
+    100% {
+        background-position: -3025px;
+    }
+}
+
+@keyframes slimeBoss-animate-jump-back {
+    0% {
+        background-position: 0;
+    }
+
+    5% {
+        scale: -1 0.8;
+    }
+
+    25% {
+        scale: -1 0.8;
+        translate: 0 0;
+    }
+
+    30% {
+        scale: -1 1;
+        translate: 0 -150px;
+    }
+
+    40% {
+        translate: 0 -240px;
+    }
+
+    50% {
+        translate: 0 -250px;
+    }
+
+    60% {
+        translate: 0 -240px;
+    }
+
+    85% {
+        scale: -1 1;
+        translate: 0 -160px;
+    }
+
+    90% {
+        scale: -1 0.7;
+        translate: 0 0;
+    }
+
+    100% {
+        background-position: -3025px;
+    }
+}
+
+@keyframes slimeBoss-animate-damaged {
+    from {
+        background-position: -847px;
+    }
+
+    to {
+        background-position: -3388px;
+    }
+}
+
+@keyframes slimeBoss-animate-died {
+    from {
+        background-position: -484px;
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        background-position: -3025px;
+    }
+}
+
+#slimeBoss>div {
+    position: absolute;
+    height: 133px;
+    width: 121px;
+    transform: translateY(-160px) scale(1.5);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#slimeBoss>.idle {
+    background-image: url("/assets/Character/SlimeBoss/SlimeBoss_Idle.png");
+}
+
+#slimeBoss>.damaged {
+    background-image: url("/assets/Character/SlimeBoss/SlimeBoss_Damaged.png");
+}
+
+#slimeBoss>.died {
+    background-image: url("/assets/Character/SlimeBoss/SlimeBoss_Died.png");
+}
+
+#slimeBoss[data-animate="idle"]>.idle {
+    opacity: 1;
+    animation: slimeBoss-animate-bg 1500ms steps(25) infinite;
+}
+
+#slimeBoss[data-animate="attack"]>.idle {
+    opacity: 1;
+    animation: slimeBoss-animate-attack 2000ms steps(25);
+}
+
+#slimeBoss[data-animate="jump-back"]>.idle {
+    opacity: 1;
+    scale: -1 1;
+    animation: slimeBoss-animate-jump-back 2000ms steps(25);
+}
+
+#slimeBoss[data-animate="damaged"]>.damaged {
+    opacity: 1;
+    background-position: -363px;
+    animation: slimeBoss-animate-damaged 200ms steps(21);
+}
+
+#slimeBoss[data-animate="died"]>.died {
+    opacity: 0;
+    animation: slimeBoss-animate-died 1000ms steps(21);
+}
