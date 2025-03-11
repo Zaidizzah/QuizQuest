@@ -53,7 +53,7 @@
 
         #allyContainer {
             margin-left: 250px;
-            margin-bottom: 265px;
+            margin-bottom: 300px;
         }
 
         @keyframes animateMoveBackAllyContainer {
@@ -88,7 +88,7 @@
         #enemyContainer {
             transform: scaleX(-1);
             margin-right: 250px;
-            margin-bottom: 265px;
+            margin-bottom: 300px;
         }
 
         @keyframes animateMoveBackEnemyContainer {
@@ -1453,43 +1453,6 @@
     <div class="game-container">
         <!-- Game field -->
         <div class="game-field">
-            <!-- Player info -->
-            <div class="player-info-container">
-                <div class="player-avatar">
-                    <!-- <img
-              src="resources/images/character/Spider-Man.png"
-              class="player-sprite"
-              loading="lazy"
-              alt="Player sprite"
-            /> -->
-                </div>
-                <div class="player-stats ui-box">
-                    <div class="player-name">Player</div>
-                    <div class="hp-bar">
-                        <div class="hp-text">100/100</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Enemy info -->
-            <div class="enemy-info-container">
-                <div class="enemy-stats ui-box">
-                    <div class="enemy-name">Slime</div>
-                    <div class="hp-bar">
-                        <div class="hp-text">100/100</div>
-                    </div>
-                </div>
-                <div class="enemy-avatar"></div>
-            </div>
-
-            <!-- Mana bar -->
-            <!-- <div
-          class="mana-bar"
-          style="position: absolute; left: 20px; top: 110px"
-        >
-          <div class="mana-text">10/100</div>
-        </div> -->
-
             <!-- Wave indicator -->
             <div class="wave-indicator">Wave 1</div>
 
@@ -1541,6 +1504,42 @@
                     </div>
                 </div>
             </div>
+            <!-- Player info -->
+            <div class="player-info-container">
+                <div class="player-avatar">
+                    <!-- <img
+              src="resources/images/character/Spider-Man.png"
+              class="player-sprite"
+              loading="lazy"
+              alt="Player sprite"
+            /> -->
+                </div>
+                <div class="player-stats ui-box">
+                    <div class="player-name">Player</div>
+                    <div id="playerHp" class="hp-bar">
+                        <div class="hp-text">100/100</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enemy info -->
+            <div class="enemy-info-container">
+                <div class="enemy-stats ui-box">
+                    <div class="enemy-name">Slime</div>
+                    <div id="enemyHp" class="hp-bar">
+                        <div class="hp-text">100/100</div>
+                    </div>
+                </div>
+                <div class="enemy-avatar"></div>
+            </div>
+
+            <!-- Mana bar -->
+            <!-- <div
+          class="mana-bar"
+          style="position: absolute; left: 20px; top: 110px"
+        >
+          <div class="mana-text">10/100</div>
+        </div> -->
 
             <!-- Biome background -->
             <div class="biome-background"></div>
@@ -1548,26 +1547,26 @@
 
         <div class="question-container">
             <div class="question">1+1=?</div>
-            <!-- <div class="options-container">
-          <div class="options">
-            <div class="option option-1">1</div>
-            <div class="option option-2">4</div>
-            <div class="option option-3">8</div>
-            <div class="option option-4">2</div>
-          </div>
-        </div> -->
+            <div class="options-container">
+                <div class="options">
+                    <div class="option option-1">1</div>
+                    <div class="option option-2">4</div>
+                    <div class="option option-3">8</div>
+                    <div class="option option-4">2</div>
+                </div>
+            </div>
 
-            <div class="stats-container">
+            <!-- <div class="stats-container">
                 <div class="correct-answer">
                     <span class="stat-text">Benar!</span>
                 </div>
-                <!-- <div class="wrong-answer">
-            <span class="stat-text">Salah!</span>
-          </div> -->
-                <!-- <div class="wave-cleared">
-            <span class="stat-text">Wave clear!</span>
-          </div> -->
-            </div>
+                <div class="wrong-answer">
+                    <span class="stat-text">Salah!</span>
+                </div>
+                <div class="wave-cleared">
+                    <span class="stat-text">Wave clear!</span>
+                </div>
+            </div> -->
         </div>
     </div>
     <button id="knightAtkBtn">knight attack</button>
@@ -1692,7 +1691,7 @@
                 $enemyContainer.classList.replace('move-skeleton', 'move-back-skeleton');
                 await delay(1000);
                 $skeleton.dataset.animate = 'idle';
-                $enemyContainer.classList.remove('move-back-skeleton')
+                $enemyContainer.classList.remove('move-back-skeleton');
             }
 
             let $slimeBoss = document.getElementById('slimeBoss');
@@ -1713,6 +1712,7 @@
                 $enemyContainer.classList.remove('move-back-slimeBoss');
             }
 
+            // contoh cara pake animasi
             document.getElementById('knightAtkBtn').addEventListener('click', function () {
                 animateKnightAttack(document.querySelector('#enemyContainer>[data-animate="idle"]'));
             });
@@ -1721,19 +1721,24 @@
             });
             document.getElementById('golemAtkBtn').addEventListener('click', function () {
                 animateGolemAttack();
-            })
+            });
             document.getElementById('jellyfishAtkBtn').addEventListener('click', function () {
                 animateJellyfishAttack();
-            })
+            });
             document.getElementById('skeletonAtkBtn').addEventListener('click', function () {
                 animateSkeletonAttack();
-            })
+            });
             document.getElementById('slimeBossAtkBtn').addEventListener('click', function () {
                 animateSlimeBossAttack();
-            })
+            });
+            // cara ngespawn char tinggal data-animate nya diubah ke idle
+            // contoh
+            $slime.dataset.animate = 'idle';
 
+            // terus cara nge despawn
+            // $slime.dataset.animate = 'died';
 
-
+            // buat fullscreen, ignore it for now, doesn't work yet
             let $fullscreenDiv = document.getElementById('fullscreen');
             let $game = document.getElementById('game');
             document.getElementById('requestFullscreen').addEventListener('click', function () {
@@ -1743,13 +1748,29 @@
                     const scale = Math.min($fullscreenDiv.offsetWidth / 1280, $fullscreenDiv.offsetHeight / 720);
                     $game.style.scale = scale;
                 }, 50);
-            })
+            });
             document.addEventListener("fullscreenchange", () => {
                 if (!document.fullscreenElement) {
                     $fullscreenDiv.classList.remove('on');
                     $game.style.scale = 1;
                 }
             });
+        
+
+
+
+            // ini buat ngubah options
+            let $options = document.querySelectorAll('.options>div'); // simpel jir awokawok
+            // contoh
+            $options[0].innerHTML = 'halo1'; //option 1
+            $options[1].innerHTML = 'halo2'; //option 2
+            $options[2].innerHTML = 'halo3'; //option 3
+            $options[3].innerHTML = 'halo4'; //option 4
+
+            // buat ngubah question 
+            let $question = document.getElementsByClassName('question')[0];
+            // contoh
+            $question.innerHTML = 'question 1';
         })
     </script>
 </body>
