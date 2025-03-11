@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="ie=edge"
+    />
+    <meta
+      name="author"
+      content="Quist Quest"
+    />
+    <meta
+      name="keywords"
+      content="Game, HTML5, HTML, CSS, JavaScript"
+    />
+    <meta
+      name="description"
+      content="Quist Quest - Defend the Knowledge"
+    />
+    <title>Quist Quest - Defend the Knowledge</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="resources/css/game-ui.css"
+    />
+  </head>
+  <body>
+    <div class="game-container">
+      <!-- Game field -->
+      <div class="game-field">
+        <!-- Player info -->
+        <div class="player-info-container">
+          <div class="player-avatar">
+            <!-- <img
+              src="resources/images/character/Spider-Man.png"
+              class="player-sprite"
+              loading="lazy"
+              alt="Player sprite"
+            /> -->
+          </div>
+          <div class="player-stats ui-box">
+            <div class="player-name">Player</div>
+            <div class="hp-bar">
+              <div class="hp-text">100/100</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enemy info -->
+        <div class="enemy-info-container">
+          <div class="enemy-stats ui-box">
+            <div class="enemy-name">Slime</div>
+            <div class="hp-bar">
+              <div class="hp-text">100/100</div>
+            </div>
+          </div>
+          <div class="enemy-avatar"></div>
+        </div>
+
+        <!-- Mana bar -->
+        <!-- <div
+          class="mana-bar"
+          style="position: absolute; left: 20px; top: 110px"
+        >
+          <div class="mana-text">10/100</div>
+        </div> -->
+
+        <!-- Player character -->
+        <div class="player-character"></div>
+
+        <!-- Enemy character -->
+        <div class="enemy-character"></div>
+
+        <!-- Biome background -->
+        <div class="biome-background"></div>
+
+        <!-- Wave indicator -->
+        <div class="wave-indicator">Wave 1</div>
+      </div>
+
+      <div class="question-container">
+        <div class="question">1+1=?</div>
+        <div class="options">
+          <div class="option option-1">1</div>
+          <div class="option option-2">4</div>
+          <div class="option option-3">8</div>
+          <div class="option option-4">2</div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      type="text/Javascript"
+      src="resources/javascript/game-ui.js"
+    ></script>
+  </body>
+</html>

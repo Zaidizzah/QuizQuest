@@ -1,0 +1,54 @@
+Splashscreen code:
+<!-- Splash screen -->
+<div class="splash-screen">
+    <div class="splash-screen-content">
+        <div class="splash-screen-text-container">
+            <span class="splash-screen-text-1"
+                >Indonesia menghadapi tantangan besar dalam iterasi dan
+                numerasi.</span
+            >
+            <span class="splash-screen-text-2"
+                >- Menurut survei Programme for International Student Assessment
+                (PISA) 2022 ole OECD, kemampuan pelajar diindonesia dalam kedua
+                aspek (numerasi dan iterasi) ini masih tertinggal jauh
+                dibandingkan negara lain.</span
+            >
+        </div>
+        <div class="splash-screen-logo-container">
+            <img
+                class="splash-screen-logo"
+                src="assets/logo/logo-putih.png"
+                loading="lazy"
+                alt="Quist Quest Logo"
+            />
+        </div>
+    </div>
+</div>
+
+<!-- Story screen -->
+<div class="story-screen">
+    <div class="story-screen-content">
+        <div class="story-screen-container">
+            <div class="story-image">
+                <img
+                src="https://placehold.co/861x500?text=-ilustrasi-"
+                loading="lazy"
+                alt="Player sprite"
+                />
+            </div>
+            <div class="story-text">
+                <span class="story-text-1"
+                >Dunia ini perlahan tenggelam dalam kebodohan</span
+                >
+                <span class="story-text-2"
+                >Monster-monster kegelapan menyerap setiap kata dan angka,
+                menghapus kecerdasan dari peradaban</span
+                >
+                <span class="story-text-3"
+                >Tanpa literasi, tanpa numerasi segala logika pun lenyap</span
+                >
+                <span class="story-text-4">Namun, harapan belum sirna…</span>
+            </div>
+        </div>
+    </div>
+</div>
