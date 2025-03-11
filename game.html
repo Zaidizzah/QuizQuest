@@ -135,7 +135,25 @@
 			<div class="biome-background"></div>
 		</div>
 
-		<div class="question-container">
+		<style>
+			.options-container {
+				display: none;
+			}
+			[data-answer-result=""] .options-container{
+				display: block;
+			}
+			.stats-container>div {
+				display: none !important;
+			}
+			[data-answer-result="true"] .correct-answer {
+				display: flex !important;
+			}
+
+			[data-answer-result="false"] .wrong-answer {
+				display: flex !important;
+			}
+		</style>
+		<div class="question-container" data-answer-result="">
 			<div id="question" class="question">1+1=?</div>
 			<div id="timer" class="question-timer">
 				<div id="questionTimerBar" class="question-timer-fill"></div>
@@ -151,16 +169,16 @@
 			</div>
 
 			<div class="stats-container">
-				<!-- <div class="correct-answer">
+				<div class="correct-answer">
 					<img src="./assets/games ui/BENAR!.png" loading="lazy" alt="Correct answer" />
-				</div> -->
-				<!-- <div class="wrong-answer">
+				</div>
+				<div class="wrong-answer">
 					<img
 					src="./assets/games ui/SALAH!.png"
 					loading="lazy"
 					alt="Wrong answer"
 					/>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	</div>
@@ -310,27 +328,6 @@
 				$enemyContainer.classList.remove("move-back-slimeBoss");
 			}
 
-			// let $fullscreenDiv = document.getElementById("fullscreen");
-			// let $game = document.getElementById("game");
-			// document.getElementById("requestFullscreen").addEventListener("click", function () {
-			// 	$fullscreenDiv.requestFullscreen();
-			// 	$fullscreenDiv.classList.add("on");
-			// 	setTimeout(() => {
-			// 		const scale = Math.min(
-			// 			$fullscreenDiv.offsetWidth / 1280,
-			// 			$fullscreenDiv.offsetHeight / 720
-			// 		);
-			// 		$game.style.scale = scale;
-			// 	}, 50);
-			// });
-			// document.addEventListener("fullscreenchange", () => {
-			// 	if (!document.fullscreenElement) {
-			// 		$fullscreenDiv.classList.remove("on");
-			// 		$game.style.scale = 1;
-			// 	}
-			// });
-
-
 			let $playerHpBar = document.getElementById('playerHpBar');
 			let $playerHptext = document.getElementById('playerHpText');
 			function changePlayerHpBar($maxHp, $currentHp) {
@@ -377,6 +374,8 @@
 				requestAnimationFrame(animateQuestionBar);
 			}
 			let $enemyInfoDiv = document.getElementById('enemyInfo');
+			let $answerResultDiv = document.querySelector('[data-answer-result]');
+
 
 			// contoh update question dan options, simpel si
 			$questionDiv.innerHTML = 'aku tambah kamu = ?';
@@ -388,6 +387,11 @@
 			//$optionDiv[_] juga bisa dipake buat kasih .addEventListener()
 
 
+			// contoh alert jawaban benar ato salah [true, false], kosongkan untuk menghilangkan alert 
+			$answerResultDiv.dataset.answerResult = "true";
+			// contoh alert jawaban benar ato salah
+
+			
 
 			// contoh cara jalanin timer display (otomatis langsung jalan setelah fungsi dipanggil)
 			setQuestionTimer(4000);
@@ -398,9 +402,9 @@
 
 
 
-			// cara ubah avatar dan nama
+			// cara ubah avatar dan nama [slime, golem, jellyfish, skeleton, slimeBoss]
 			$enemyInfoDiv.dataset.enemyName = 'slime';
-			// // cara ubah avatar dan nama [slime, golem, jellyfish, skeleton, slimeBoss]
+			// // cara ubah avatar dan nama
 
 
 
