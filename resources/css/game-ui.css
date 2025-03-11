@@ -194,10 +194,18 @@ body {
   border-radius: 4px;
   position: relative;
   overflow: hidden;
+}
+
+.hp-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   background-color: var(--red);
 }
 
-.hp-bar::after {
+.hp-bar-fill::after {
   content: "";
   position: absolute;
   top: 0;
