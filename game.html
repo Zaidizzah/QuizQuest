@@ -86,7 +86,9 @@
 			<!-- Player info -->
 			<div class="player-info-container">
 				<div class="player-avatar">
-					<img src="" class="player-sprite" loading="lazy" alt="Knight" />
+					<!-- <img src="" class="player-sprite" loading="lazy" alt="Knight" /> -->
+					<div class="knight-avatar"></div>
+					<!-- <div>halo</div> -->
 				</div>
 				<div class="player-stats ui-box">
 					<div class="player-name">Player</div>
@@ -98,17 +100,26 @@
 			</div>
 
 			<!-- Enemy info -->
-			<div class="enemy-info-container">
+			<div id="enemyInfo" class="enemy-info-container" data-enemy-name="">
 				<div class="enemy-stats ui-box">
-					<div class="enemy-name">Slime</div>
+					<div class="enemy-name">
+						<div class="name-slime">Slime</div>
+						<div class="name-golem">Golem</div>
+						<div class="name-jellyfish">Jellyfish</div>
+						<div class="name-skeleton">Skeleton</div>
+						<div class="name-slimeBoss">Slime Boss</div>
+					</div>
 					<div class="hp-bar">
 						<div id="enemyHpBar" class="hp-bar-fill" style="right: 0;"></div>
 						<div id="enemyHpText" class="hp-text">100/100</div>
 					</div>
 				</div>
 				<div class="enemy-avatar">
-					<img src="" class="enemy-sprite" loading="lazy" alt="Enemy
-              " />
+					<div class="slime-avatar"></div>
+					<div class="golem-avatar"></div>
+					<div class="jellyfish-avatar"></div>
+					<div class="skeleton-avatar"></div>
+					<div class="slimeBoss-avatar"></div>
 				</div>
 			</div>
 
@@ -125,39 +136,34 @@
 		</div>
 
 		<div class="question-container">
-			<div class="question">1+1=?</div>
-			<!-- <div class="options-container">
-                <div class="options">
-                    <div class="option option-1">1</div>
-                    <div class="option option-2">4</div>
-                    <div class="option option-3">8</div>
-                    <div class="option option-4">2</div>
-                </div>
-            </div> -->
+			<div id="question" class="question">1+1=?</div>
+			<div id="timer" class="question-timer">
+				<div id="questionTimerBar" class="question-timer-fill"></div>
+				<div id="questionTimerText" class="question-timer-text">1 seconds</div>
+			</div>
+			<div class="options-container">
+				<div id="options" class="options">
+					<div class="option option-1">1</div>
+					<div class="option option-2">4</div>
+					<div class="option option-3">8</div>
+					<div class="option option-4">2</div>
+				</div>
+			</div>
 
 			<div class="stats-container">
-				<div class="correct-answer">
+				<!-- <div class="correct-answer">
 					<img src="./assets/games ui/BENAR!.png" loading="lazy" alt="Correct answer" />
-				</div>
+				</div> -->
 				<!-- <div class="wrong-answer">
-            <img
-              src="./assets/games ui/SALAH!.png"
-              loading="lazy"
-              alt="Wrong answer"
-            />
-          </div> -->
+					<img
+					src="./assets/games ui/SALAH!.png"
+					loading="lazy"
+					alt="Wrong answer"
+					/>
+				</div> -->
 			</div>
 		</div>
 	</div>
-	<button id="knightAtkBtn">knight attack</button>
-	<button id="slimeAtkBtn">slime attack</button>
-	<button id="golemAtkBtn">golem attack</button>
-	<button id="jellyfishAtkBtn">jellyfish attack</button>
-	<button id="skeletonAtkBtn">skeleton attack</button>
-	<button id="slimeBossAtkBtn">slimeBoss attack</button>
-	<button id="requestFullscreen">fullscreen</button>
-
-	<script type="text/Javascript" src="resources/javascript/game-ui.js"></script>
 	<script>
 		function delay(ms) {
 			return new Promise((resolve) => setTimeout(resolve, ms));
@@ -304,25 +310,6 @@
 				$enemyContainer.classList.remove("move-back-slimeBoss");
 			}
 
-			document.getElementById("knightAtkBtn").addEventListener("click", function () {
-				animateKnightAttack(document.querySelector('#enemyContainer>[data-animate="idle"]'));
-			});
-			document.getElementById("slimeAtkBtn").addEventListener("click", function () {
-				animateSlimeAttack();
-			});
-			document.getElementById("golemAtkBtn").addEventListener("click", function () {
-				animateGolemAttack();
-			});
-			document.getElementById("jellyfishAtkBtn").addEventListener("click", function () {
-				animateJellyfishAttack();
-			});
-			document.getElementById("skeletonAtkBtn").addEventListener("click", function () {
-				animateSkeletonAttack();
-			});
-			document.getElementById("slimeBossAtkBtn").addEventListener("click", function () {
-				animateSlimeBossAttack();
-			});
-
 			// let $fullscreenDiv = document.getElementById("fullscreen");
 			// let $game = document.getElementById("game");
 			// document.getElementById("requestFullscreen").addEventListener("click", function () {
@@ -358,9 +345,91 @@
 				$enemyHpBar.style.width = $percent + '%';
 				$enemyHptext.innerText = $currentHp + '/' + $maxHp;
 			}
+			let $questionDiv = document.getElementById('question');
+			let $optionsDiv = document.querySelectorAll('#options>.option');
+			let $questionTimerBar = document.getElementById('questionTimerBar');
+			let $questionTimerText = document.getElementById('questionTimerText');
+			let $isTimerCounting = false;
+			async function setQuestionTimer($miliseconds) {
+				$isTimerCounting = true;
+				$questionTimerBar.style.display = 'block';
 
-			changePlayerHpBar(10, 5);
-			changeEnemyHpBar(10, 2);
+				let startTime = null;
+				let startPosition = 100;
+				let endPosition = 0;
+
+				function animateQuestionBar(timestamp) {
+					if (!startTime) startTime = timestamp;
+
+					let elapsedTime = timestamp - startTime;
+					let progress = Math.min(elapsedTime / $miliseconds, 1);
+
+					let currentPosition = startPosition + (endPosition - startPosition) * progress;
+					$questionTimerBar.style.width = currentPosition + '%';
+					let remainingTime = (Math.round(($miliseconds - elapsedTime)) / 1000).toFixed(2)
+					if (remainingTime > 0) { $questionTimerText.innerHTML = remainingTime + 's' } else { $questionTimerText.innerHTML = '0.00s' };
+
+					if ((progress < 1) && $isTimerCounting) {
+						requestAnimationFrame(animateQuestionBar);
+					}
+				}
+
+				requestAnimationFrame(animateQuestionBar);
+			}
+			let $enemyInfoDiv = document.getElementById('enemyInfo');
+
+			// contoh update question dan options, simpel si
+			$questionDiv.innerHTML = 'aku tambah kamu = ?';
+			$optionsDiv[0].innerHTML = 'imposible';
+			$optionsDiv[1].innerHTML = 'probably';
+			$optionsDiv[2].innerHTML = 'would';
+			$optionsDiv[3].innerHTML = 'straight to fun stuf';
+			// // contoh update question dan options
+			//$optionDiv[_] juga bisa dipake buat kasih .addEventListener()
+
+
+
+			// contoh cara jalanin timer display (otomatis langsung jalan setelah fungsi dipanggil)
+			setQuestionTimer(4000);
+			setTimeout(() => {
+				$isTimerCounting = false; // to stop timer do this
+			}, 3220);
+			// contoh cara jalanin timer display
+
+
+
+			// cara ubah avatar dan nama
+			$enemyInfoDiv.dataset.enemyName = 'slime';
+			// // cara ubah avatar dan nama [slime, golem, jellyfish, skeleton, slimeBoss]
+
+
+
+			// contoh cara spawn enemy
+			$slime.dataset.animate = 'idle';
+			// $golem.dataset.animate = 'idle';
+			// $skeleton.dataset.animate = 'idle';
+			// $jellyfish.dataset.animate = 'idle';
+			// $slimeBoss.dataset.animate = 'idle';
+			// // contoh cara spawn enemy
+			// cara despawn tinggal dibikin $__.dataset.animate = 'died';
+
+
+
+			// contoh jalanin animasi
+			animateKnightAttack(document.querySelector('#enemyContainer>[data-animate="idle"]'));
+			// animateSlimeAttack();
+			// animateGolemAttack();
+			// animateSkeletonAttack();
+			// animateJellyfishAttack();
+			// animateSlimeBossAttack();
+			// // contoh jalanin animasi
+
+
+
+			// contoh ubah hp
+			changePlayerHpBar(100, 50);
+			changeEnemyHpBar(50, 20);
+			// // contoh ubah hp
 		});
 	</script>
 </body>
