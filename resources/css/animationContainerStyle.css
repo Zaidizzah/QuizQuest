@@ -1,0 +1,329 @@
+.z-100 {
+    z-index: 100;
+}
+
+#fullscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fullscreen:not(.on) {
+    height: 720px;
+    width: 1280px;
+}
+
+#game {
+    height: 720px;
+    width: 1280px;
+}
+
+#backgroundContainer {
+    display: flex;
+    flex-direction: column;
+    height: 720px;
+    width: 1280px;
+}
+
+#gameAnimationContainer {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 720px;
+    width: 1280px;
+    overflow: hidden;
+    scale: 1;
+    transform-origin: top left;
+}
+
+#allyContainer {
+    margin-left: 250px;
+    margin-bottom: 300px;
+}
+
+@keyframes animateMoveBackAllyContainer {
+    from {
+        transform: translateX(530px);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes animateMoveAllyContainer {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(530px);
+    }
+}
+
+#allyContainer.move {
+    transform: translateX(530px);
+    animation: animateMoveAllyContainer 700ms linear;
+}
+
+#allyContainer.move-back {
+    animation: animateMoveBackAllyContainer 700ms linear;
+}
+
+#enemyContainer {
+    transform: scaleX(-1);
+    margin-right: 250px;
+    margin-bottom: 300px;
+}
+
+@keyframes animateMoveBackEnemyContainer {
+    from {
+        transform: scaleX(-1) translateX(530px);
+    }
+
+    to {
+        transform: scaleX(-1) translateX(0);
+    }
+}
+
+@keyframes animateMoveEnemyContainer {
+    from {
+        transform: scaleX(-1) translateX(0);
+    }
+
+    to {
+        transform: scaleX(-1) translateX(530px);
+    }
+}
+
+#enemyContainer.move {
+    transform: scaleX(-1) translateX(530px);
+    animation: animateMoveEnemyContainer 1000ms linear;
+}
+
+@keyframes animateMoveSlime {
+    0% {
+        transform: scaleX(-1);
+    }
+
+    28% {
+        transform: scaleX(-1) translateX(0);
+    }
+
+    36% {
+        transform: scaleX(-1) translateX(112px);
+    }
+
+    47% {
+        transform: scaleX(-1) translateX(225px);
+    }
+
+    77% {
+        transform: scaleX(-1) translateX(225px);
+    }
+
+    87% {
+        transform: scaleX(-1) translateX(337px);
+    }
+
+    100% {
+        transform: scaleX(-1) translateX(450px);
+    }
+}
+
+@keyframes animateMoveBackSlime {
+    0% {
+        transform: scaleX(-1) translateX(450px);
+    }
+
+    28% {
+        transform: scaleX(-1) translateX(450px);
+    }
+
+    36% {
+        transform: scaleX(-1) translateX(338px);
+    }
+
+    47% {
+        transform: scaleX(-1) translateX(225px);
+    }
+
+    77% {
+        transform: scaleX(-1) translateX(225px);
+    }
+
+    87% {
+        transform: scaleX(-1) translateX(113px);
+    }
+
+    100% {
+        transform: scaleX(-1);
+    }
+}
+
+#enemyContainer.move-slime {
+    transform: scaleX(-1) translateX(450px);
+    animation: animateMoveSlime 1400ms linear;
+}
+
+#enemyContainer.move-back-slime {
+    transform: scaleX(-1);
+    animation: animateMoveBackSlime 1400ms linear;
+}
+
+@keyframes animateMoveGolem {
+    from {
+        transform: scaleX(-1);
+    }
+
+    to {
+        transform: scaleX(-1) translateX(350px);
+    }
+}
+
+@keyframes animateMoveGolemAttack {
+    0% {
+        transform: scaleX(-1) translateX(350px);
+    }
+
+    100% {
+        transform: scaleX(-1) translateX(520px);
+    }
+}
+
+@keyframes animateMoveBackGolem {
+    from {
+        transform: scaleX(-1) translateX(520px);
+    }
+
+    to {
+        transform: scaleX(-1);
+    }
+}
+
+#enemyContainer.move-golem {
+    transform: scaleX(-1) translateX(350px);
+    animation: animateMoveGolem 1000ms linear;
+}
+
+#enemyContainer.move-golem-attack {
+    transform: scaleX(-1) translateX(520px);
+    animation: animateMoveGolemAttack 800ms linear;
+}
+
+#enemyContainer.move-back-golem {
+    transform: scaleX(-1);
+    animation: animateMoveBackGolem 1200ms linear;
+}
+
+@keyframes animateMoveJellyfish {
+    from {
+        transform: scaleX(-1) translateX(0);
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -35px;
+    }
+
+    to {
+        transform: scaleX(-1) translateX(500px);
+        translate: 0 -50px;
+    }
+}
+
+#enemyContainer.move-jellyfish {
+    transform: scaleX(-1) translateX(500px);
+    translate: 0 -50px;
+    animation: animateMoveJellyfish 1500ms linear;
+}
+
+@keyframes animateMoveBackJellyfish {
+    from {
+        transform: scaleX(-1) translateX(500px);
+        translate: 0 -50px;
+    }
+
+    50% {
+        translate: 0 -15px;
+    }
+
+    to {
+        translate: 0 0;
+    }
+}
+
+#enemyContainer.move-back-jellyfish {
+    transform: scaleX(-1) translateX(0);
+    translate: 0 0;
+    animation: animateMoveBackJellyfish 1500ms linear;
+}
+
+@keyframes animateMoveSlimeBoss {
+    0% {
+        transform: scaleX(-1) translateX(0);
+    }
+
+    25% {
+        transform: scaleX(-1) translateX(0);
+    }
+
+    90% {
+        transform: scaleX(-1) translateX(550px);
+    }
+}
+
+#enemyContainer.move-slimeBoss {
+    transform: scaleX(-1) translateX(550px);
+    animation: animateMoveSlimeBoss 2000ms linear;
+}
+
+@keyframes animateMoveBackSlimeBoss {
+    0% {
+        transform: scaleX(-1) translateX(550px);
+    }
+
+    25% {
+        transform: scaleX(-1) translateX(550px);
+    }
+
+    90% {
+        transform: scaleX(-1) translateX(0);
+    }
+}
+
+#enemyContainer.move-back-slimeBoss {
+    transform: scaleX(-1);
+    animation: animateMoveBackSlimeBoss 2000ms linear;
+}
+
+@keyframes animateMoveSkeleton {
+    from {
+        translate: 0;
+    }
+
+    to {
+        translate: -500px;
+    }
+}
+
+#enemyContainer.move-skeleton {
+    translate: -500px;
+    animation: animateMoveSkeleton 1000ms linear;
+}
+
+@keyframes animateMoveBackSkeleton {
+    from {
+        translate: -500px;
+    }
+
+    to {
+        translate: 0;
+    }
+}
+
+#enemyContainer.move-back-skeleton {
+    translate: 0;
+    animation: animateMoveBackSkeleton 1000ms linear;
+}

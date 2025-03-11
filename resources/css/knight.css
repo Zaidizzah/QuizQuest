@@ -1,0 +1,174 @@
+@keyframes knight-animate-bg {
+    from {
+        background-position: 0;
+    }
+
+    to {
+        background-position: -4200px;
+    }
+}
+
+@keyframes knight-animate-atk {
+
+    /* tambahan keyframe karena sprite attack nya ga pas */
+    from {
+        background-position: -168px;
+        /* start from frame 2 */
+    }
+
+    to {
+        background-position: -4368px;
+        /* end with frame 1 */
+    }
+}
+
+@keyframes knight-animate-damaged {
+
+    /* tambahan keyframe karena sprite attack nya ga pas */
+    from {
+        background-position: -336px;
+        /* start from frame 2 */
+    }
+
+    to {
+        background-position: -4536px;
+        /* end with frame 1 */
+    }
+}
+
+@keyframes knight-animate-shocked {
+
+    /* tambahan keyframe karena sprite attack nya ga pas */
+    0% {
+        background-position: -336px;
+        /* start from frame 2 */
+    }
+
+    30% {
+        background-position: -4536px;
+        /* end with frame 1 */
+    }
+
+    35% {
+        scale: 1 1;
+    }
+
+    45% {
+        scale: 0.9 1.02;
+    }
+
+    55% {
+        scale: 1 1;
+    }
+
+    65% {
+        scale: 0.9 1.02;
+    }
+
+    75% {
+        scale: 1 1;
+        background-position: -4536px;
+    }
+}
+
+@keyframes knight-animate-died {
+    from {
+        background-position: -336px;
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    to {
+        background-position: -4200px;
+        opacity: 0;
+    }
+}
+
+#knight>div {
+    position: absolute;
+    width: 168px;
+    height: 225px;
+    transform: translateY(-225px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#knight>.idle {
+    background-image: url("/assets/Character/Knight/knight_idle.png");
+}
+
+#knight>.walk {
+    background-image: url("/assets/Character/Knight/knight_walk.png");
+}
+
+#knight>.attack {
+    background-image: url("/assets/Character/Knight/knight_attack.png");
+}
+
+#knight>.damaged {
+    background-image: url("/assets/Character/Knight/knight_damaged.png");
+}
+
+#knight>.died {
+    background-image: url("/assets/Character/Knight/knight_died.png");
+}
+
+#knight[data-animate="idle"]>.idle {
+    opacity: 1;
+    animation: knight-animate-bg 1000ms steps(25) infinite;
+}
+
+#knight[data-animate="walk"]>.walk {
+    opacity: 1;
+    animation: knight-animate-bg 250ms steps(25) infinite;
+}
+
+#knight[data-animate="damaged"]>.damaged {
+    opacity: 1;
+    animation: knight-animate-damaged 200ms steps(25);
+    background-position: -336px;
+}
+
+#knight[data-animate="attack"]>.attack {
+    animation: knight-animate-atk 300ms steps(25);
+    background-position: -168px;
+    opacity: 1;
+}
+
+#knight[data-animate="shocked"]>.damaged {
+    opacity: 1;
+    animation: knight-animate-shocked 800ms steps(25);
+    background-position: -336px;
+}
+
+#knight[data-animate="died"]>.died {
+    background-position: -4200px;
+    animation: knight-animate-died 1000ms steps(23);
+}

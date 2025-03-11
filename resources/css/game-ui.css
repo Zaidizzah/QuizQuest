@@ -15,6 +15,10 @@
   --border-width: 8px;
 }
 
+[data-hidden="true"]{
+  display: none !important;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -90,10 +94,7 @@ body {
   flex-wrap: wrap;
 }
 
-.splash-screen
-  .splash-screen-content
-  .splash-screen-logo-container
-  img.splash-screen-logo {
+.splash-screen .splash-screen-content .splash-screen-logo-container img.splash-screen-logo {
   width: 100%;
   height: auto;
   max-width: 350px;
@@ -169,9 +170,7 @@ body {
   height: 80px;
   border: 6px solid var(--black);
   border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
 }
 
 .player-avatar {
@@ -181,6 +180,114 @@ body {
 
 .enemy-avatar {
   background-color: var(--white);
+}
+
+.knight-avatar {
+  width: 168px;
+  height: 225px;
+  scale: 0.45;
+  translate: -10px -10px;
+  transform-origin: 0 0;
+  background-image: url('/assets/Character/Knight/knight_idle.png');
+}
+
+.enemy-avatar {
+  scale: -1 1;
+}
+
+.enemy-avatar>div {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+}
+
+.slime-avatar {
+  width: 112px;
+  height: 102px;
+  scale: 0.6;
+  translate: 1px 5px;
+  transform-origin: 0 0;
+  background-image: url('/assets/Character/Slime/slime_idle.png');
+}
+
+.golem-avatar {
+  width: 171px;
+  height: 125px;
+  scale: 0.6;
+  translate: -25px 8px;
+  transform-origin: 0 0;
+  background-image: url('/assets/Character/Golem/golem_idle.png');
+}
+
+.jellyfish-avatar {
+  height: 169px;
+  width: 158px;
+  scale: 0.5;
+  translate: -5px;
+  transform-origin: 0 0;
+  background-image: url('/assets/Character/Jellyfish/jellyfish_idle.png');
+}
+
+.skeleton-avatar {
+  height: 181px;
+  width: 182px;
+  scale: 0.55;
+  translate: -5px -2px;
+  transform-origin: 0 0;
+  background-image: url('/assets/Character/Skeleton/Skeleton_Idle.png');
+}
+
+.slimeBoss-avatar {
+  height: 133px;
+  width: 121px;
+  scale: 0.7;
+  translate: -15px -10px;
+  transform-origin: 0 0;
+  background-image: url('/assets/Character/SlimeBoss/SlimeBoss_Idle.png');
+}
+
+.enemy-name>div {
+  display: none;
+}
+
+[data-enemy-name="slime"] .name-slime {
+  display: block;
+}
+
+[data-enemy-name="golem"] .name-golem {
+  display: block;
+}
+
+[data-enemy-name="jellyfish"] .name-jellyfish {
+  display: block;
+}
+
+[data-enemy-name="skeleton"] .name-skeleton {
+  display: block;
+}
+
+[data-enemy-name="slimeBoss"] .name-slimeBoss {
+  display: block;
+}
+
+[data-enemy-name="slime"] .slime-avatar {
+  opacity: 1;
+}
+
+[data-enemy-name="golem"] .golem-avatar {
+  opacity: 1;
+}
+
+[data-enemy-name="jellyfish"] .jellyfish-avatar {
+  opacity: 1;
+}
+
+[data-enemy-name="skeleton"] .skeleton-avatar {
+  opacity: 1;
+}
+
+[data-enemy-name="slimeBoss"] .slimeBoss-avatar {
+  opacity: 1;
 }
 
 .player-stats,
@@ -211,7 +318,6 @@ body {
 .hp-bar-fill {
   position: absolute;
   top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
   background-color: var(--red);
@@ -224,12 +330,10 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(213, 213, 213, 0.2) 20%,
-    rgba(255, 255, 255, 0) 80%
-  );
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(213, 213, 213, 0.2) 20%,
+      rgba(255, 255, 255, 0) 80%);
 }
 
 .hp-text {
@@ -261,12 +365,10 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.2) 20%,
-    rgba(255, 255, 255, 0) 80%
-  );
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0) 80%);
 }
 
 .mana-text {
@@ -349,9 +451,54 @@ body {
   flex-direction: column;
 }
 
+.options-container {
+  display: none;
+}
+
+[data-answer-result=""] .options-container {
+  display: block;
+}
+
+.stats-container>div {
+  display: none !important;
+}
+
+[data-answer-result="true"] .correct-answer {
+  display: flex !important;
+}
+
+[data-answer-result="false"] .wrong-answer {
+  display: flex !important;
+}
+
+.question-timer {
+  background-color: var(--white);
+  border-width: 4px 0 var(--border-width) 0;
+  min-height: 32px;
+  border-style: solid;
+  border-color: var(--black);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question-timer-fill {
+  /* display: none; */
+  height: 100%;
+  background-color: var(--yellow);
+  /* animation: animate-question-timer linear; */
+}
+
+.question-timer-text {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+
 .question {
   background-color: var(--white);
-  border-width: var(--border-width) 0 var(--border-width) 0;
+  border-width: var(--border-width) 0 0 0;
   border-style: solid;
   border-color: var(--black);
   padding: 10px;
