@@ -22,13 +22,9 @@
 <body>
 	<div class="game-container">
 		<!-- Next level stat -->
-		<!-- <div class="next-level-stat">
-        <img
-          src="./assets/games ui/Next Level.png"
-          loading="lazy"
-          alt="Next level stat"
-        />
-      </div> -->
+		<div id="nextLevelDiv" class="next-level-stat" data-hidden="true">
+			<img src="./assets/games ui/Next Level.png" loading="lazy" alt="Next level stat" />
+		</div>
 
 		<!-- Game field -->
 		<div class="game-field">
@@ -135,24 +131,6 @@
 			<div class="biome-background"></div>
 		</div>
 
-		<style>
-			.options-container {
-				display: none;
-			}
-			[data-answer-result=""] .options-container{
-				display: block;
-			}
-			.stats-container>div {
-				display: none !important;
-			}
-			[data-answer-result="true"] .correct-answer {
-				display: flex !important;
-			}
-
-			[data-answer-result="false"] .wrong-answer {
-				display: flex !important;
-			}
-		</style>
 		<div class="question-container" data-answer-result="">
 			<div id="question" class="question">1+1=?</div>
 			<div id="timer" class="question-timer">
@@ -173,11 +151,7 @@
 					<img src="./assets/games ui/BENAR!.png" loading="lazy" alt="Correct answer" />
 				</div>
 				<div class="wrong-answer">
-					<img
-					src="./assets/games ui/SALAH!.png"
-					loading="lazy"
-					alt="Wrong answer"
-					/>
+					<img src="./assets/games ui/SALAH!.png" loading="lazy" alt="Wrong answer" />
 				</div>
 			</div>
 		</div>
@@ -375,7 +349,7 @@
 			}
 			let $enemyInfoDiv = document.getElementById('enemyInfo');
 			let $answerResultDiv = document.querySelector('[data-answer-result]');
-
+			let $nextLevelAlertDiv = document.getElementById('nextLevelDiv');
 
 			// contoh update question dan options, simpel si
 			$questionDiv.innerHTML = 'aku tambah kamu = ?';
@@ -387,11 +361,17 @@
 			//$optionDiv[_] juga bisa dipake buat kasih .addEventListener()
 
 
-			// contoh alert jawaban benar ato salah [true, false], kosongkan untuk menghilangkan alert 
-			$answerResultDiv.dataset.answerResult = "true";
-			// contoh alert jawaban benar ato salah
-
 			
+			// contoh ngedisplay alert jawaban benar ato salah [true, false], kosongkan untuk menghilangkan alert 
+			$answerResultDiv.dataset.answerResult = "true";
+			// contoh ngedisplay alert jawaban benar ato salah
+
+
+
+			// contoh ngedisplay alert next level [true, false]
+			$nextLevelAlertDiv.dataset.hidden = false;
+			// // contoh ngedisplay alert next level
+
 
 			// contoh cara jalanin timer display (otomatis langsung jalan setelah fungsi dipanggil)
 			setQuestionTimer(4000);
