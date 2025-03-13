@@ -267,19 +267,18 @@
 					document.exitFullscreen();
 					return;
 				}
-				$isFullScreen = true;
 				$fullscreenDiv.requestFullscreen();
-				setTimeout(() => {
-					const scale = Math.min($fullscreenDiv.offsetWidth / 1280, $fullscreenDiv.offsetHeight / 720);
-					$gameDiv.style.scale = scale;
-					$gameDiv.style.translate = '0';
-				}, 50);
 			})
 			document.addEventListener("fullscreenchange", () => {
 				if (!document.fullscreenElement) {
 					$gameDiv.style.scale = $defaultScale;
 					$gameDiv.style.translate = '0 50vh';
 					$isFullScreen = false;
+				} else {
+					const scale = Math.min($fullscreenDiv.offsetWidth / 1280, $fullscreenDiv.offsetHeight / 720);
+					$gameDiv.style.scale = scale;
+					$gameDiv.style.translate = '0';
+					$isFullScreen = true;
 				}
 			});
 
