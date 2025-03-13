@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="ie=edge"
+    />
+    <meta
+      name="author"
+      content="Quist Quest"
+    />
+    <meta
+      name="keywords"
+      content="Game, HTML5, HTML, CSS, JavaScript"
+    />
+    <meta
+      name="description"
+      content="Quist Quest - Defend the Knowledge"
+    />
+    <title>Quist Quest - Defend the Knowledge</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="resources/css/main-menu-ui.css"
+    />
+  </head>
+  <body>
+    <!-- Main menu Container -->
+    <div class="main-menu-container">
+      <!-- Logo Container -->
+      <div class="logo-container">
+        <img
+          src="assets/logo/logo-outline-putih.png"
+          loading="lazy"
+          alt="quist-quest-logo"
+        />
+      </div>
+
+      <!-- Main menu wrapper -->
+      <div class="main-menu">
+        <div class="map-terrain">
+          <!-- terrain -->
+          <div class="terrain">
+            <div class="grass-block">
+              <div class="grass"></div>
+            </div>
+            <div class="dirt-block"></div>
+
+            <!-- map sign -->
+            <div
+              class="sign-container tooltip-trigger"
+              data-placement="top"
+              data-tooltip="Sistem pendidikan kita masih buruk!"
+            >
+              <a
+                href="pendidikan-ui.html"
+                role="button"
+                style="text-decoration: none"
+              >
+                <div class="sign">
+                  <img
+                    src="assets/games ui/main menu/indonesia.png"
+                    loading="lazy"
+                    alt="Indonesia Map"
+                  />
+                  <div class="warning-icon">!</div>
+                </div>
+                <div class="stands">
+                  <div class="stand"></div>
+                  <div class="stand"></div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="main-terrain">
+          <!-- terrain -->
+          <div class="terrain">
+            <div class="grass-block">
+              <div class="grass"></div>
+            </div>
+            <div class="dirt-block"></div>
+          </div>
+
+          <!-- icons container -->
+          <div class="icons-container">
+            <a
+              href="literasi-ui.html"
+              role="button"
+              style="text-decoration: none"
+            >
+              <div
+                class="book-icon tooltip-trigger"
+                data-placement="top"
+                data-tooltip="Para penduduk minim literasi"
+              ></div>
+            </a>
+            <a
+              href="numerasi-ui.html"
+              role="button"
+              style="text-decoration: none"
+            >
+              <div
+                class="calculator-icon tooltip-trigger"
+                data-placement="top"
+                data-tooltip="Kita mengalami kecemasan matematika"
+              ></div>
+            </a>
+          </div>
+
+          <!-- Player (Knight) sprite -->
+          <div
+            class="knight-sprite tooltip-trigger"
+            data-placement="top"
+            data-tooltip="Selamat datang di Quist Quest! Hadapi kemalasan dengan kekuatanmu"
+          ></div>
+        </div>
+        <div class="start-terrain">
+          <!-- terrain -->
+          <div class="terrain">
+            <div class="grass-block">
+              <div class="grass"></div>
+            </div>
+            <div class="dirt-block"></div>
+
+            <!-- start sign -->
+            <div
+              class="sign-container tooltip-trigger"
+              data-placement="top"
+              data-tooltip="AYO MULAI!"
+            >
+              <a
+                href="game.html"
+                role="button"
+                style="text-decoration: none"
+              >
+                <div class="sign">
+                  <div class="sign-text">
+                    Start <br />
+                    Defend
+                  </div>
+                </div>
+                <div class="stands">
+                  <div class="stand single"></div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="resources/javascript/main-menu-ui.js"
+    ></script>
+  </body>
+</html>

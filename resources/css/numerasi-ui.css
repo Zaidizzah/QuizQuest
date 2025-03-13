@@ -1,0 +1,87 @@
+
+/* Reset dan Font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Comic Sans MS", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #F5E8DD;
+    padding: 20px;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.blackboard {
+    background: #2DB861;
+    border: 15px solid #F1C79B;
+    outline: 8px solid #3B3B3B;
+    border-radius: 20px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+    color: #FFF5E1;
+    position: relative;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+}
+
+.chalk-text {
+    font-size: 1.4rem;
+    line-height: 2;
+    text-align: left;
+}
+
+.highlight {
+    color: #FFD166;
+}
+
+.chalk-doodle {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 120px;
+    animation: swing 3s infinite ease-in-out;
+}
+
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .chalk-text {
+        font-size: 1.1rem;
+    }
+
+    .chalk-doodle {
+        width: 60px;
+    }
+}
