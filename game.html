@@ -174,32 +174,71 @@
 				this.defense = defense;
 				this.isEnemy = isEnemy;
 				this.healthElement = document.getElementById(name.toLowerCase() + "Health");
-
-				// Assign the correct HP bar elements
-				if (isEnemy) {
-					this.hpBar = document.getElementById("enemyHpBar");
-					this.hpText = document.getElementById("enemyHpText");
-				} else {
-					this.hpBar = document.getElementById("playerHpBar");
-					this.hpText = document.getElementById("playerHpText");
-				}
+				this.container = isEnemy ? document.getElementById("enemyContainer") : document.getElementById("allyContainer");
 
 				this.updateHealthDisplay();
 			}
 
 			updateHealthDisplay() {
 				const percent = (this.health / this.maxHealth) * 100;
-				this.hpBar.style.width = percent + "%";
-				this.hpText.innerText = `${this.health} / ${this.maxHealth}`;
+				if (this.isEnemy) {
+					document.getElementById("enemyHpBar").style.width = percent + "%";
+					document.getElementById("enemyHpText").innerText = `${this.health} / ${this.maxHealth}`;
+				} else {
+					document.getElementById("playerHpBar").style.width = percent + "%";
+					document.getElementById("playerHpText").innerText = `${this.health} / ${this.maxHealth}`;
+				}
+			}
+
+			async attackAnimation(target) {
+				if (!this.isEnemy) {
+					await this.animateKnightAttack(target);
+				} else {
+					await this.animateEnemyAttack(target);
+				}
+			}
+
+			async animateKnightAttack(enemyElement) {
+				this.container.classList.add("move", "z-100");
+				this.element.dataset.animate = "walk";
+				await delay(700);
+				this.element.dataset.animate = "idle";
+				await delay(100);
+				this.element.dataset.animate = "attack";
+				await delay(200);
+				enemyElement.dataset.animate = "damaged";
+				await delay(300);
+				enemyElement.dataset.animate = "idle";
+				this.element.dataset.animate = "walk";
+				this.container.classList.replace("move", "move-back");
+				await delay(700);
+				this.element.dataset.animate = "idle";
+				this.container.classList.remove("move-back", "z-100");
+			}
+
+			async animateEnemyAttack(targetElement) {
+				this.container.classList.add(`move-${this.name.toLowerCase()}`);
+				this.element.dataset.animate = "walk";
+				await delay(1000);
+				this.element.dataset.animate = "idle";
+				await delay(200);
+				this.element.dataset.animate = "attack";
+				await delay(200);
+				targetElement.dataset.animate = this.name === "Jellyfish" ? "shocked" : "damaged";
+				await delay(500);
+				this.element.dataset.animate = "idle";
+				targetElement.dataset.animate = "idle";
+				await delay(200);
+				this.element.dataset.animate = "walk_fliped";
+				this.container.classList.replace(`move-${this.name.toLowerCase()}`, `move-back-${this.name.toLowerCase()}`);
+				await delay(1000);
+				this.element.dataset.animate = "idle";
+				this.container.classList.remove(`move-back-${this.name.toLowerCase()}`);
 			}
 
 			async performAttack(target) {
 				let damage = Math.max(this.attack - target.defense, 0);
-				if (!this.isEnemy) {
-					await animateKnightAttack(target.element);
-				} else {
-					await animateSlimeAttack(this.element);
-				}
+				await this.attackAnimation(target.element);
 
 				if (damage > 0) {
 					target.health -= damage;
@@ -210,52 +249,21 @@
 			}
 		}
 
-		// Attack animation function
-		let $allyContainer = document.getElementById("allyContainer");
-		let $knight = document.getElementById("knight");
-
-		async function animateKnightAttack(enemyElement) {
-			$allyContainer.classList.add("move", "z-100");
-			$knight.dataset.animate = "walk";
-			await delay(700);
-			$knight.dataset.animate = "idle";
-			await delay(100);
-			$knight.dataset.animate = "attack";
-			await delay(200);
-			enemyElement.dataset.animate = "damaged";
-			await delay(300);
-			enemyElement.dataset.animate = "idle";
-			$knight.dataset.animate = "walk";
-			$allyContainer.classList.replace("move", "move-back");
-			await delay(700);
-			$knight.dataset.animate = "idle";
-			$allyContainer.classList.remove("move-back", "z-100");
-		}
-
-		// HP bar update functions
-		let $playerHpBar = document.getElementById("playerHpBar");
-		let $playerHptext = document.getElementById("playerHpText");
-
-		function changePlayerHpBar($maxHp, $currentHp) {
-			const percent = ($currentHp / $maxHp) * 100;
-			$playerHpBar.style.width = percent + "%";
-			$playerHptext.innerText = `${$currentHp} / ${$maxHp}`;
-		}
-
-		let $enemyHpBar = document.getElementById("enemyHpBar");
-		let $enemyHptext = document.getElementById("enemyHpText");
-
-		function changeEnemyHpBar($maxHp, $currentHp) {
-			const percent = ($currentHp / $maxHp) * 100;
-			$enemyHpBar.style.width = percent + "%";
-			$enemyHptext.innerText = `${$currentHp} / ${$maxHp}`;
-		}
-
 		function delay(ms) {
 			return new Promise((resolve) => setTimeout(resolve, ms));
 		}
 
 		document.addEventListener("DOMContentLoaded", function () {
+			// Global Var
+			let $questionDiv = document.getElementById('question');
+			let $optionsDiv = document.querySelectorAll('#options>.option');
+			let $answerResultDiv = document.querySelector("[data-answer-result]");
+			let $nextLevelAlertDiv = document.getElementById("nextLevelDiv");
+			let $enemyInfoDiv = document.getElementById("enemyInfo");
+			let $questionTimerBar = document.getElementById("questionTimerBar");
+			let $questionTimerText = document.getElementById("questionTimerText");
+			let $isTimerCounting = false;
+
 			let $fullscreenDiv = document.getElementById('fullscreen');
 			let $gameDiv = document.getElementById('gameDiv');
 			let $isFullScreen = false;
@@ -287,162 +295,15 @@
 				$gameDiv.style.scale = $defaultScale = scale;
 			});
 
-			let $knight = document.getElementById("knight");
-			let $slime = document.getElementById("slime");
+			let $isTimerPaused = false;
 
-			let $levelIndicator = document.getElementById('levelIndicator');
-			let $waveIndicator = document.getElementById('waveIndicator');
+			let $timerId = null;
 
-			function updateLevelAndWave($level, $wave) {
-				$levelIndicator.innerHTML = 'Level: ' + $level;
-				$waveIndicator.innerHTML = 'Wave: ' + $wave + ' out of 5';
-			}
-
-			let knight = new Character($knight, "Knight", 100, 10, 5);
-			let slime = new Character($slime, "Slime", 100, 10, 5, true);
-
-			let $enemyContainer = document.getElementById("enemyContainer");
-
-			async function animateSlimeAttack() {
-				$enemyContainer.classList.add("move-slime");
-				$slime.dataset.animate = "walk";
-				await delay(1400);
-				$slime.dataset.animate = "idle";
-				await delay(200);
-				$slime.dataset.animate = "attack";
-				await delay(210);
-				$knight.dataset.animate = "damaged";
-				await delay(280);
-				$slime.dataset.animate = "idle";
-				$knight.dataset.animate = "idle";
-				await delay(100);
-				$enemyContainer.classList.replace("move-slime", "move-back-slime");
-				$slime.dataset.animate = "walk_fliped";
-				await delay(1700);
-				$slime.dataset.animate = "idle";
-				$enemyContainer.classList.remove("move-back-slime");
-			}
-
-			let $golem = document.getElementById("golem");
-
-			async function animateGolemAttack() {
-				$enemyContainer.classList.add("move-golem");
-				$golem.dataset.animate = "walk";
-				await delay(1030);
-				$golem.dataset.animate = "idle";
-				await delay(200);
-				$enemyContainer.classList.replace("move-golem", "move-golem-attack");
-				$golem.dataset.animate = "attack";
-				await delay(900);
-				$knight.dataset.animate = "damaged";
-				await delay(200);
-				$knight.dataset.animate = "idle";
-				$golem.dataset.animate = "idle";
-				await delay(300);
-				$golem.dataset.animate = "walk_fliped";
-				$enemyContainer.classList.replace(
-					"move-golem-attack",
-					"move-back-golem"
-				);
-				await delay(1200);
-				$enemyContainer.classList.remove("move-back-golem");
-				$golem.dataset.animate = "idle";
-			}
-
-			let $jellyfish = document.getElementById("jellyfish");
-
-			async function animateJellyfishAttack() {
-				$jellyfish.dataset.animate = "walk";
-				$enemyContainer.classList.add("move-jellyfish");
-				await delay(1600);
-				$jellyfish.dataset.animate = "idle";
-				await delay(200);
-				$jellyfish.dataset.animate = "attack";
-				await delay(200);
-				$knight.dataset.animate = "shocked";
-				await delay(800);
-				$jellyfish.dataset.animate = "idle";
-				$knight.dataset.animate = "idle";
-				await delay(200);
-				$jellyfish.dataset.animate = "walk-back";
-				$enemyContainer.classList.replace(
-					"move-jellyfish",
-					"move-back-jellyfish"
-				);
-				await delay(1500);
-				$jellyfish.dataset.animate = "idle";
-				$enemyContainer.classList.remove("move-back-jellyfish");
-			}
-
-			let $skeleton = document.getElementById("skeleton");
-
-			async function animateSkeletonAttack() {
-				$skeleton.dataset.animate = "walk";
-				$enemyContainer.classList.add("move-skeleton");
-				await delay(1000);
-				$skeleton.dataset.animate = "idle";
-				await delay(200);
-				$skeleton.dataset.animate = "attack";
-				await delay(160);
-				$knight.dataset.animate = "damaged";
-				await delay(110);
-				$skeleton.dataset.animate = "idle";
-				await delay(90);
-				$knight.dataset.animate = "idle";
-				await delay(200);
-				$skeleton.dataset.animate = "walk_fliped";
-				$enemyContainer.classList.replace(
-					"move-skeleton",
-					"move-back-skeleton"
-				);
-				await delay(1000);
-				$skeleton.dataset.animate = "idle";
-				$enemyContainer.classList.remove("move-back-skeleton");
-			}
-
-			let $slimeBoss = document.getElementById("slimeBoss");
-
-			async function animateSlimeBossAttack() {
-				$slimeBoss.dataset.animate = "attack";
-				$enemyContainer.classList.add("move-slimeBoss");
-				await delay(1800);
-				$knight.dataset.animate = "damaged";
-				await delay(200);
-				$knight.dataset.animate = "idle";
-				$slimeBoss.dataset.animate = "idle";
-				await delay(200);
-				$slimeBoss.dataset.animate = "jump-back";
-				$enemyContainer.classList.replace(
-					"move-slimeBoss",
-					"move-back-slimeBoss"
-				);
-				await delay(2000);
-				$slimeBoss.dataset.animate = "idle";
-				$enemyContainer.classList.remove("move-back-slimeBoss");
-			}
-
-			let $playerHpBar = document.getElementById('playerHpBar');
-			let $playerHptext = document.getElementById('playerHpText');
-			function changePlayerHpBar($maxHp, $currentHp) {
-				$percent = ($currentHp / $maxHp) * 100;
-				$playerHpBar.style.width = $percent + '%';
-				$playerHptext.innerText = $currentHp + '/' + $maxHp;
-			}
-			let $enemyHpBar = document.getElementById('enemyHpBar');
-			let $enemyHptext = document.getElementById('enemyHpText');
-			function changeEnemyHpBar($maxHp, $currentHp) {
-				$percent = ($currentHp / $maxHp) * 100;
-				$enemyHpBar.style.width = $percent + '%';
-				$enemyHptext.innerText = $currentHp + '/' + $maxHp;
-			}
-			let $questionDiv = document.getElementById('question');
-			let $optionsDiv = document.querySelectorAll('#options>.option');
-			let $questionTimerBar = document.getElementById('questionTimerBar');
-			let $questionTimerText = document.getElementById('questionTimerText');
-			let $isTimerCounting = false;
-			async function setQuestionTimer($miliseconds) {
+			async function setQuestionTimer($milliseconds) {
+				clearTimeout($timerId); // Clear any previous timer
 				$isTimerCounting = true;
-				$questionTimerBar.style.display = 'block';
+				$isTimerPaused = false;
+				$questionTimerBar.style.display = "block";
 
 				let startTime = null;
 				let startPosition = 100;
@@ -452,26 +313,56 @@
 					if (!startTime) startTime = timestamp;
 
 					let elapsedTime = timestamp - startTime;
-					let progress = Math.min(elapsedTime / $miliseconds, 1);
 
+					if ($isTimerPaused) {
+						startTime = timestamp - elapsedTime; // Freeze timer progress
+						requestAnimationFrame(animateQuestionBar);
+						return;
+					}
+
+					let progress = Math.min(elapsedTime / $milliseconds, 1);
 					let currentPosition = startPosition + (endPosition - startPosition) * progress;
-					$questionTimerBar.style.width = currentPosition + '%';
-					let remainingTime = (Math.round(($miliseconds - elapsedTime)) / 1000).toFixed(2)
-					if (remainingTime > 0) { $questionTimerText.innerHTML = remainingTime + 's' } else { $questionTimerText.innerHTML = '0.00s' };
+					$questionTimerBar.style.width = currentPosition + "%";
 
-					if ((progress < 1) && $isTimerCounting) {
+					let remainingTime = ((Math.round($milliseconds - elapsedTime)) / 1000).toFixed(2);
+					$questionTimerText.innerHTML = remainingTime > 0 ? remainingTime + "s" : "0.00s";
+
+					if (progress < 1 && $isTimerCounting) {
 						requestAnimationFrame(animateQuestionBar);
 					}
 				}
 
 				requestAnimationFrame(animateQuestionBar);
+
+				// Store timeout to prevent multiple attacks
+				$timerId = setTimeout(() => {
+					if ($isTimerCounting) {
+						console.log("Time is up! Enemy attacks!");
+						enemyTurn();
+					}
+				}, $milliseconds);
 			}
 
-			let $enemyInfoDiv = document.getElementById('enemyInfo');
-			let $answerResultDiv = document.querySelector('[data-answer-result]');
-			let $nextLevelAlertDiv = document.getElementById('nextLevelDiv');
+			function pauseTimer() {
+				$isTimerPaused = true;
+			}
 
-			$answerResultDiv.dataset.answerResult = 'true';
+			function resumeTimer() {
+				$isTimerPaused = false;
+			}
+
+			function enemyTurn() {
+				if (!$isTimerCounting) return;
+
+				pauseTimer();
+				$isTimerCounting = false;
+				$currentEnemy.performAttack(knight);
+
+				setTimeout(() => {
+					resumeTimer();
+					loadQuestion();
+				}, 1000);
+			}
 
 			function adjustFontSize(div) {
 				let fontSize = 30;
@@ -485,6 +376,104 @@
 				div.style.fontSize = fontSize + "px";
 			}
 			// contoh update question dan options, simpel si (umar: wau simpel sekali)
+
+			// Player
+			let $knight = document.getElementById("knight");
+			let knight = new Character($knight, "Knight", 100, 100, 30, false);
+
+			// Enemies
+			let enemies = [
+				new Character(document.getElementById("slime"), "Slime", 100, 20, 10, true),
+				new Character(document.getElementById("golem"), "Golem", 150, 25, 18, true),
+				new Character(document.getElementById("jellyfish"), "Jellyfish", 120, 12, 6, true),
+				new Character(document.getElementById("skeleton"), "Skeleton", 130, 14, 7, true),
+				new Character(document.getElementById("slimeBoss"), "SlimeBoss", 200, 20, 10, true)
+			];
+
+			let $currentEnemy = null;
+			let currentLevel = 1;
+			let currentWave = 1;
+
+			// Fungsi pilih musuh
+			function pickRandomEnemy() {
+				enemies = enemies.filter(enemy => enemy.health > 0);
+
+				if (enemies.length === 0) {
+					console.log("All enemies are defeated! You win!");
+					return;
+				}
+
+				if ($currentEnemy && $currentEnemy.health <= 0) {
+					$currentEnemy.element.style.display = "none"; // Hilangkan musuh yang mati
+				}
+
+				if (!$currentEnemy || $currentEnemy.health <= 0) {
+					$currentEnemy = enemies[Math.floor(Math.random() * enemies.length)];
+
+					$enemyInfoDiv.dataset.enemyName = $currentEnemy.name.toLowerCase();
+					$currentEnemy.element.style.display = "block"; // Tampilkan musuh baru
+
+					console.log(`Now fighting: ${$currentEnemy.name}`);
+				}
+			}
+
+			// Fungsi tampilkan hasil jawaban
+			function showAnswerResult(isCorrect) {
+				$answerResultDiv.dataset.answerResult = isCorrect ? "true" : "false";
+				setTimeout(() => {
+					$answerResultDiv.dataset.answerResult = ""; // Hide after delay
+				}, 1000);
+			}
+
+			// Fungsi tampilkan alert level selanjutnya
+			function showNextLevelAlert() {
+				$nextLevelAlertDiv.dataset.hidden = false;
+				setTimeout(() => {
+					$nextLevelAlertDiv.dataset.hidden = true;
+					pickRandomEnemy();
+				}, 2000);
+			}
+
+			// Fungsi untuk validasi jawaban
+			function checkAnswer(selected, correct) {
+				clearTimeout($timerId);
+				pauseTimer();
+
+				if (selected === correct) {
+					console.log("Correct!");
+					showAnswerResult(true);
+					knight.performAttack($currentEnemy);
+
+					setTimeout(() => {
+						if ($currentEnemy.health <= 0) {
+							console.log(`${$currentEnemy.name} has been defeated!`);
+							currentWave++;
+
+							if (currentWave > 5) {
+								currentLevel++;
+								currentWave = 1;
+								showNextLevelAlert();
+							} else {
+								pickRandomEnemy(); // Panggil musuh baru saat yang lama mati
+							}
+
+							updateLevelAndWave(currentLevel, currentWave);
+						}
+
+						resumeTimer();
+						setQuestionTimer(10000);
+						loadQuestion();
+					}, 1000);
+				} else {
+					console.log("Wrong answer.");
+					showAnswerResult(false);
+					setTimeout(() => {
+						enemyTurn();
+					}, 1000);
+				}
+			}
+
+			// Load pertanyaan dan musuh
 			async function loadQuestion() {
 				try {
 					const response = await fetch("/resources/questions.json");
@@ -492,7 +481,7 @@
 
 					let questions = data.quiz || [];
 
-					// Generate a random math question
+					// Generate random math question
 					const num1 = Math.floor(Math.random() * 100) + 1;
 					const num2 = Math.floor(Math.random() * 100) + 1;
 					const operators = ["+", "-", "*", "/"];
@@ -510,27 +499,25 @@
 							answer = num1 * num2;
 							break;
 						case "/":
-							answer = (num1 / num2).toFixed(2); // Limit division to 2 decimal places
+							answer = (num1 / num2).toFixed(2);
 							break;
 					}
 
 					const mathQuestion = {
-						question: `What is ${num1} ${operator} ${num2}?`,
+						question: `Jawaban dari ${num1} ${operator} ${num2}?`,
 						options: [
 							answer,
 							answer + Math.floor(Math.random() * 10) + 1,
 							answer - Math.floor(Math.random() * 10) + 1,
 							answer + Math.floor(Math.random() * 5) + 1
-						].sort(() => Math.random() - 0.5), // Shuffle options
+						].sort(() => Math.random() - 0.5),
 						answer: answer
 					};
 
-					// Mix the questions
 					questions.push(mathQuestion);
 					const randomIndex = Math.floor(Math.random() * questions.length);
 					const currentQuestion = questions[randomIndex];
 
-					// Set question and options dynamically
 					$questionDiv.innerHTML = currentQuestion.question;
 
 					$optionsDiv.forEach((button, index) => {
@@ -540,71 +527,28 @@
 						}
 						adjustFontSize(button);
 					});
+
+					setQuestionTimer(10000); // Reset timer when new question appears
+
+					// Ensure first enemy appears when the game starts
+					if (!$currentEnemy) {
+						pickRandomEnemy();
+					}
+
 				} catch (error) {
 					console.error("Error loading questions:", error);
 				}
 			}
 
-			function checkAnswer(selected, correct) {
-				if (selected === correct) {
-					console.log("Correct!");
-					knight.performAttack(slime);
-				} else {
-					console.log("Wrong answer.");
-					slime.performAttack(knight);
-				}
-				setTimeout(loadQuestion, 1000); // Load next question after a delay
+			// Level and wave tracking
+			let $levelIndicator = document.getElementById("levelIndicator");
+			let $waveIndicator = document.getElementById("waveIndicator");
+
+			function updateLevelAndWave($level, $wave) {
+				$levelIndicator.innerHTML = "Level: " + $level;
+				$waveIndicator.innerHTML = "Wave: " + $wave + " out of 5";
 			}
 
-			// // contoh update question dan options
-			//$optionDiv[_] juga bisa dipake buat kasih .addEventListener()
-
-			// contoh ngedisplay alert jawaban benar ato salah [true, false], kosongkan untuk menghilangkan alert 
-			$answerResultDiv.dataset.answerResult = "";
-			// contoh ngedisplay alert jawaban benar ato salah
-
-
-
-			// contoh ngedisplay alert next level [true, false]
-			$nextLevelAlertDiv.dataset.hidden = true;
-			// // contoh ngedisplay alert next level
-
-			// contoh update level dan wave display
-			updateLevelAndWave(4, 2);
-
-			// contoh cara jalanin timer display (otomatis langsung jalan setelah fungsi dipanggil)
-			setQuestionTimer(4000);
-			setTimeout(() => {
-				$isTimerCounting = false; // to stop timer do this
-			}, 3220);
-			// contoh cara jalanin timer display
-
-			// cara ubah avatar dan nama [slime, golem, jellyfish, skeleton, slimeBoss]
-			$enemyInfoDiv.dataset.enemyName = 'slime';
-			// // cara ubah avatar dan nama
-
-			// contoh cara spawn enemy
-			$slime.dataset.animate = 'idle';
-			// $golem.dataset.animate = 'idle';
-			// $skeleton.dataset.animate = 'idle';
-			// $jellyfish.dataset.animate = 'idle';
-			// $slimeBoss.dataset.animate = 'idle';
-			// // contoh cara spawn enemy
-			// cara despawn tinggal dibikin $__.dataset.animate = 'died';
-
-			// contoh jalanin animasi
-			animateKnightAttack(document.querySelector('#enemyContainer>[data-animate="idle"]'));
-			// animateSlimeAttack();
-			// animateGolemAttack();
-			// animateSkeletonAttack();
-			// animateJellyfishAttack();
-			// animateSlimeBossAttack();
-			// // contoh jalanin animasi
-
-			// contoh ubah hp
-			// changePlayerHpBar(100, 50);
-			// changeEnemyHpBar(50, 20);
-			// // contoh ubah hp
 			loadQuestion();
 		});
 	</script>
