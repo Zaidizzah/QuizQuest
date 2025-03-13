@@ -20,138 +20,145 @@
 </head>
 
 <body>
-	<div class="game-container">
-		<!-- Next level stat -->
-		<div id="nextLevelDiv" class="next-level-stat" data-hidden="true">
-			<img src="./assets/games ui/Next Level.png" loading="lazy" alt="Next level stat" />
-		</div>
-
-		<!-- Game field -->
-		<div class="game-field">
-			<!-- Wave indicator -->
-			<div class="wave-indicator">Wave 1</div>
-
-			<div id="gameAnimationContainer">
-				<div id="allyContainer">
-					<div id="knight" data-animate="idle">
-						<div class="idle"></div>
-						<div class="walk"></div>
-						<div class="attack"></div>
-						<div class="damaged"></div>
-						<div class="died"></div>
-					</div>
-				</div>
-				<div id="enemyContainer" class="">
-					<div id="slime" data-animate="">
-						<div class="idle"></div>
-						<div class="walk"></div>
-						<div class="attack"></div>
-						<div class="damaged"></div>
-						<div class="died"></div>
-					</div>
-					<div id="golem" data-animate="">
-						<div class="idle"></div>
-						<div class="walk"></div>
-						<div class="attack"></div>
-						<div class="damaged"></div>
-						<div class="died"></div>
-					</div>
-					<div id="jellyfish" data-animate="">
-						<div class="idle"></div>
-						<div class="walk"></div>
-						<div class="attack"></div>
-						<div class="damaged"></div>
-						<div class="died"></div>
-					</div>
-					<div id="skeleton" data-animate="">
-						<div class="idle"></div>
-						<div class="walk"></div>
-						<div class="attack"></div>
-						<div class="damaged"></div>
-						<div class="died"></div>
-					</div>
-					<div id="slimeBoss" data-animate="">
-						<div class="idle"></div>
-						<div class="walk"></div>
-						<div class="attack"></div>
-						<div class="damaged"></div>
-						<div class="died"></div>
-					</div>
-				</div>
-			</div>
-			<!-- Player info -->
-			<div class="player-info-container">
-				<div class="player-avatar">
-					<!-- <img src="" class="player-sprite" loading="lazy" alt="Knight" /> -->
-					<div class="knight-avatar"></div>
-					<!-- <div>halo</div> -->
-				</div>
-				<div class="player-stats ui-box">
-					<div class="player-name">Player</div>
-					<div class="hp-bar">
-						<div id="playerHpBar" class="hp-bar-fill" style="rotate: 180deg; left: 0;"></div>
-						<div id="playerHpText" class="hp-text">100/100</div>
-					</div>
-				</div>
+	<div id="fullscreen">
+		<div id="gameDiv" class="game-container">
+			<!-- Next level stat -->
+			<div id="nextLevelDiv" class="next-level-stat" data-hidden="true">
+				<img src="./assets/games ui/Next Level.png" loading="lazy" alt="Next level stat" />
 			</div>
 
-			<!-- Enemy info -->
-			<div id="enemyInfo" class="enemy-info-container" data-enemy-name="">
-				<div class="enemy-stats ui-box">
-					<div class="enemy-name">
-						<div class="name-slime">Slime</div>
-						<div class="name-golem">Golem</div>
-						<div class="name-jellyfish">Jellyfish</div>
-						<div class="name-skeleton">Skeleton</div>
-						<div class="name-slimeBoss">Slime Boss</div>
-					</div>
-					<div class="hp-bar">
-						<div id="enemyHpBar" class="hp-bar-fill" style="right: 0;"></div>
-						<div id="enemyHpText" class="hp-text">100/100</div>
+			<!-- Game field -->
+			<div class="game-field">
+				<div class="level-indicator-container">
+					<div id="levelIndicator" class="level-indicator">Level: 1</div>
+					<div id="waveIndicator" class="wave-indicator">Wave: 1 of 5</div>
+				</div>
+				<div class="ground">
+					<div id="btnFullscreenToggle">
+						toggle fullscreen
 					</div>
 				</div>
-				<div class="enemy-avatar">
-					<div class="slime-avatar"></div>
-					<div class="golem-avatar"></div>
-					<div class="jellyfish-avatar"></div>
-					<div class="skeleton-avatar"></div>
-					<div class="slimeBoss-avatar"></div>
-				</div>
-			</div>
 
-			<!-- Mana bar -->
-			<!-- <div
+				<div id="gameAnimationContainer">
+					<div id="allyContainer">
+						<div id="knight" data-animate="idle">
+							<div class="idle"></div>
+							<div class="walk"></div>
+							<div class="attack"></div>
+							<div class="damaged"></div>
+							<div class="died"></div>
+						</div>
+					</div>
+					<div id="enemyContainer" class="">
+						<div id="slime" data-animate="">
+							<div class="idle"></div>
+							<div class="walk"></div>
+							<div class="attack"></div>
+							<div class="damaged"></div>
+							<div class="died"></div>
+						</div>
+						<div id="golem" data-animate="">
+							<div class="idle"></div>
+							<div class="walk"></div>
+							<div class="attack"></div>
+							<div class="damaged"></div>
+							<div class="died"></div>
+						</div>
+						<div id="jellyfish" data-animate="">
+							<div class="idle"></div>
+							<div class="walk"></div>
+							<div class="attack"></div>
+							<div class="damaged"></div>
+							<div class="died"></div>
+						</div>
+						<div id="skeleton" data-animate="">
+							<div class="idle"></div>
+							<div class="walk"></div>
+							<div class="attack"></div>
+							<div class="damaged"></div>
+							<div class="died"></div>
+						</div>
+						<div id="slimeBoss" data-animate="">
+							<div class="idle"></div>
+							<div class="walk"></div>
+							<div class="attack"></div>
+							<div class="damaged"></div>
+							<div class="died"></div>
+						</div>
+					</div>
+				</div>
+				<!-- Player info -->
+				<div class="player-info-container">
+					<div class="player-avatar">
+						<!-- <img src="" class="player-sprite" loading="lazy" alt="Knight" /> -->
+						<div class="knight-avatar"></div>
+						<!-- <div>halo</div> -->
+					</div>
+					<div class="player-stats ui-box">
+						<div class="player-name">Player</div>
+						<div class="hp-bar">
+							<div id="playerHpBar" class="hp-bar-fill" style="rotate: 180deg; left: 0;"></div>
+							<div id="playerHpText" class="hp-text">100/100</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Enemy info -->
+				<div id="enemyInfo" class="enemy-info-container" data-enemy-name="">
+					<div class="enemy-stats ui-box">
+						<div class="enemy-name">
+							<div class="name-slime">Slime</div>
+							<div class="name-golem">Golem</div>
+							<div class="name-jellyfish">Jellyfish</div>
+							<div class="name-skeleton">Skeleton</div>
+							<div class="name-slimeBoss">Slime Boss</div>
+						</div>
+						<div class="hp-bar">
+							<div id="enemyHpBar" class="hp-bar-fill" style="right: 0;"></div>
+							<div id="enemyHpText" class="hp-text">100/100</div>
+						</div>
+					</div>
+					<div class="enemy-avatar">
+						<div class="slime-avatar"></div>
+						<div class="golem-avatar"></div>
+						<div class="jellyfish-avatar"></div>
+						<div class="skeleton-avatar"></div>
+						<div class="slimeBoss-avatar"></div>
+					</div>
+				</div>
+
+				<!-- Mana bar -->
+				<!-- <div
             class="mana-bar"
             style="position: absolute; left: 20px; top: 110px"
             >
                 <div class="mana-text">10/100</div>
             </div> -->
 
-			<!-- Biome background -->
-			<div class="biome-background"></div>
-		</div>
-
-		<div class="question-container" data-answer-result="">
-			<div id="question" class="question">1+1=?</div>
-			<div id="timer" class="question-timer">
-				<div id="questionTimerBar" class="question-timer-fill"></div>
-				<div id="questionTimerText" class="question-timer-text">1 seconds</div>
-			</div>
-			<div class="options-container">
-				<div id="options" class="options">
-					<div class="option option-1">1</div>
-					<div class="option option-2">4</div>
-					<div class="option option-3">8</div>
-					<div class="option option-4">2</div>
-				</div>
+				<!-- Biome background -->
+				<div class="biome-background"></div>
 			</div>
 
-			<div class="stats-container">
-				<div class="correct-answer">
-					<img src="./assets/games ui/BENAR!.png" loading="lazy" alt="Correct answer" />
+			<div class="question-container" data-answer-result="">
+				<div id="question" class="question">1+1=?</div>
+				<div id="timer" class="question-timer">
+					<div id="questionTimerBar" class="question-timer-fill"></div>
+					<div id="questionTimerText" class="question-timer-text">1 seconds</div>
 				</div>
-				<div class="wrong-answer">
-					<img src="./assets/games ui/SALAH!.png" loading="lazy" alt="Wrong answer" />
+				<div id="options" class="options-container">
+					<div class="option option-1"></div>
+					<div class="option option-2"></div>
+					<div class="option option-3"></div>
+					<div class="option option-4"></div>
+				</div>
+
+				<div class="stats-container">
+					<div class="correct-answer">
+						<img src="./assets/games ui/BENAR!.png" loading="lazy" alt="Correct answer" />
+					</div>
+					<div class="wrong-answer">
+						<img src="./assets/games ui/SALAH!.png" loading="lazy" alt="Wrong answer" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -249,8 +256,48 @@
 		}
 
 		document.addEventListener("DOMContentLoaded", function () {
+			let $fullscreenDiv = document.getElementById('fullscreen');
+			let $gameDiv = document.getElementById('gameDiv');
+			let $isFullScreen = false;
+			let $defaultScale = 1;
+			$defaultScale = Math.min(document.documentElement.clientWidth / 1280, document.documentElement.clientHeight / 720) - 0.05;
+			$gameDiv.style.scale = $defaultScale;
+			document.getElementById('btnFullscreenToggle').addEventListener('click', function () {
+				if ($isFullScreen) {
+					document.exitFullscreen();
+					return;
+				}
+				$isFullScreen = true;
+				$fullscreenDiv.requestFullscreen();
+				setTimeout(() => {
+					const scale = Math.min($fullscreenDiv.offsetWidth / 1280, $fullscreenDiv.offsetHeight / 720);
+					$gameDiv.style.scale = scale;
+					$gameDiv.style.translate = '0';
+				}, 50);
+			})
+			document.addEventListener("fullscreenchange", () => {
+				if (!document.fullscreenElement) {
+					$gameDiv.style.scale = $defaultScale;
+					$gameDiv.style.translate = '0 50vh';
+					$isFullScreen = false;
+				}
+			});
+
+			window.addEventListener('resize', function () {
+				const scale = Math.min(document.documentElement.clientWidth / 1280, document.documentElement.clientHeight / 720) - 0.05;
+				$gameDiv.style.scale = $defaultScale = scale;
+			});
+
 			let $knight = document.getElementById("knight");
 			let $slime = document.getElementById("slime");
+
+			let $levelIndicator = document.getElementById('levelIndicator');
+			let $waveIndicator = document.getElementById('waveIndicator');
+
+			function updateLevelAndWave($level, $wave) {
+				$levelIndicator.innerHTML = 'Level: ' + $level;
+				$waveIndicator.innerHTML = 'Wave: ' + $wave + ' out of 5';
+			}
 
 			let knight = new Character($knight, "Knight", 100, 10, 5);
 			let slime = new Character($slime, "Slime", 100, 10, 5, true);
@@ -425,7 +472,20 @@
 			let $answerResultDiv = document.querySelector('[data-answer-result]');
 			let $nextLevelAlertDiv = document.getElementById('nextLevelDiv');
 
-			// contoh update question dan options, simpel si
+			$answerResultDiv.dataset.answerResult = 'true';
+
+			function adjustFontSize(div) {
+				let fontSize = 30;
+				let minFontSize = 15;
+				div.style.fontSize = fontSize + "px";
+
+				while ((div.scrollHeight > div.clientHeight || div.scrollWidth > div.clientWidth) && fontSize > minFontSize) {
+					fontSize -= 5;
+					div.style.fontSize = fontSize + "px";
+				}
+				div.style.fontSize = fontSize + "px";
+			}
+			// contoh update question dan options, simpel si (umar: wau simpel sekali)
 			async function loadQuestion() {
 				try {
 					const response = await fetch("/resources/questions.json");
@@ -479,6 +539,7 @@
 							button.innerHTML = currentQuestion.options[index];
 							button.onclick = () => checkAnswer(currentQuestion.options[index], currentQuestion.answer);
 						}
+						adjustFontSize(button);
 					});
 				} catch (error) {
 					console.error("Error loading questions:", error);
@@ -508,6 +569,9 @@
 			// contoh ngedisplay alert next level [true, false]
 			$nextLevelAlertDiv.dataset.hidden = true;
 			// // contoh ngedisplay alert next level
+
+			// contoh update level dan wave display
+			updateLevelAndWave(4, 2);
 
 			// contoh cara jalanin timer display (otomatis langsung jalan setelah fungsi dipanggil)
 			setQuestionTimer(4000);

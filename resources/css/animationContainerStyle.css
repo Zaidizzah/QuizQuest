@@ -8,15 +8,15 @@
     align-items: center;
 }
 
-#fullscreen:not(.on) {
+/* #fullscreen:not(.on) {
     height: 720px;
     width: 1280px;
-}
+} */
 
-#game {
+/* #game {
     height: 720px;
     width: 1280px;
-}
+} */
 
 #backgroundContainer {
     display: flex;
