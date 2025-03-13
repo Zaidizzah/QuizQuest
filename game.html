@@ -157,32 +157,105 @@
 		</div>
 	</div>
 	<script>
+		class Character {
+			constructor(element, name, health, attack, defense, isEnemy = true) {
+				this.element = element;
+				this.name = name;
+				this.maxHealth = health;
+				this.health = health;
+				this.attack = attack;
+				this.defense = defense;
+				this.isEnemy = isEnemy;
+				this.healthElement = document.getElementById(name.toLowerCase() + "Health");
+
+				// Assign the correct HP bar elements
+				if (isEnemy) {
+					this.hpBar = document.getElementById("enemyHpBar");
+					this.hpText = document.getElementById("enemyHpText");
+				} else {
+					this.hpBar = document.getElementById("playerHpBar");
+					this.hpText = document.getElementById("playerHpText");
+				}
+
+				this.updateHealthDisplay();
+			}
+
+			updateHealthDisplay() {
+				const percent = (this.health / this.maxHealth) * 100;
+				this.hpBar.style.width = percent + "%";
+				this.hpText.innerText = `${this.health} / ${this.maxHealth}`;
+			}
+
+			async performAttack(target) {
+				let damage = Math.max(this.attack - target.defense, 0);
+				if (!this.isEnemy) {
+					await animateKnightAttack(target.element);
+				} else {
+					await animateSlimeAttack(this.element);
+				}
+
+				if (damage > 0) {
+					target.health -= damage;
+					target.health = Math.max(target.health, 0);
+					console.log(`${this.name} attacks ${target.name} for ${damage} damage.`);
+					target.updateHealthDisplay();
+				}
+			}
+		}
+
+		// Attack animation function
+		let $allyContainer = document.getElementById("allyContainer");
+		let $knight = document.getElementById("knight");
+
+		async function animateKnightAttack(enemyElement) {
+			$allyContainer.classList.add("move", "z-100");
+			$knight.dataset.animate = "walk";
+			await delay(700);
+			$knight.dataset.animate = "idle";
+			await delay(100);
+			$knight.dataset.animate = "attack";
+			await delay(200);
+			enemyElement.dataset.animate = "damaged";
+			await delay(300);
+			enemyElement.dataset.animate = "idle";
+			$knight.dataset.animate = "walk";
+			$allyContainer.classList.replace("move", "move-back");
+			await delay(700);
+			$knight.dataset.animate = "idle";
+			$allyContainer.classList.remove("move-back", "z-100");
+		}
+
+		// HP bar update functions
+		let $playerHpBar = document.getElementById("playerHpBar");
+		let $playerHptext = document.getElementById("playerHpText");
+
+		function changePlayerHpBar($maxHp, $currentHp) {
+			const percent = ($currentHp / $maxHp) * 100;
+			$playerHpBar.style.width = percent + "%";
+			$playerHptext.innerText = `${$currentHp} / ${$maxHp}`;
+		}
+
+		let $enemyHpBar = document.getElementById("enemyHpBar");
+		let $enemyHptext = document.getElementById("enemyHpText");
+
+		function changeEnemyHpBar($maxHp, $currentHp) {
+			const percent = ($currentHp / $maxHp) * 100;
+			$enemyHpBar.style.width = percent + "%";
+			$enemyHptext.innerText = `${$currentHp} / ${$maxHp}`;
+		}
+
 		function delay(ms) {
 			return new Promise((resolve) => setTimeout(resolve, ms));
 		}
+
 		document.addEventListener("DOMContentLoaded", function () {
-			let $allyContainer = document.getElementById("allyContainer");
 			let $knight = document.getElementById("knight");
-			async function animateKnightAttack(enemyElement) {
-				$allyContainer.classList.add("move", "z-100");
-				$knight.dataset.animate = "walk";
-				await delay(700);
-				$knight.dataset.animate = "idle";
-				await delay(100);
-				$knight.dataset.animate = "attack";
-				await delay(200);
-				enemyElement.dataset.animate = "damaged";
-				await delay(300);
-				enemyElement.dataset.animate = "idle";
-				$knight.dataset.animate = "walk";
-				$allyContainer.classList.replace("move", "move-back");
-				await delay(700);
-				$knight.dataset.animate = "idle";
-				$allyContainer.classList.remove("move-back", "z-100");
-			}
+			let $slime = document.getElementById("slime");
+
+			let knight = new Character($knight, "Knight", 100, 10, 5);
+			let slime = new Character($slime, "Slime", 100, 10, 5, true);
 
 			let $enemyContainer = document.getElementById("enemyContainer");
-			let $slime = document.getElementById("slime");
 
 			async function animateSlimeAttack() {
 				$enemyContainer.classList.add("move-slime");
@@ -347,31 +420,94 @@
 
 				requestAnimationFrame(animateQuestionBar);
 			}
+
 			let $enemyInfoDiv = document.getElementById('enemyInfo');
 			let $answerResultDiv = document.querySelector('[data-answer-result]');
 			let $nextLevelAlertDiv = document.getElementById('nextLevelDiv');
 
 			// contoh update question dan options, simpel si
-			$questionDiv.innerHTML = 'aku tambah kamu = ?';
-			$optionsDiv[0].innerHTML = 'imposible';
-			$optionsDiv[1].innerHTML = 'probably';
-			$optionsDiv[2].innerHTML = 'would';
-			$optionsDiv[3].innerHTML = 'straight to fun stuf';
+			async function loadQuestion() {
+				try {
+					const response = await fetch("/resources/questions.json");
+					const data = await response.json();
+
+					let questions = data.quiz || [];
+
+					// Generate a random math question
+					const num1 = Math.floor(Math.random() * 100) + 1;
+					const num2 = Math.floor(Math.random() * 100) + 1;
+					const operators = ["+", "-", "*", "/"];
+					const operator = operators[Math.floor(Math.random() * operators.length)];
+					let answer;
+
+					switch (operator) {
+						case "+":
+							answer = num1 + num2;
+							break;
+						case "-":
+							answer = num1 - num2;
+							break;
+						case "*":
+							answer = num1 * num2;
+							break;
+						case "/":
+							answer = (num1 / num2).toFixed(2); // Limit division to 2 decimal places
+							break;
+					}
+
+					const mathQuestion = {
+						question: `What is ${num1} ${operator} ${num2}?`,
+						options: [
+							answer,
+							answer + Math.floor(Math.random() * 10) + 1,
+							answer - Math.floor(Math.random() * 10) + 1,
+							answer + Math.floor(Math.random() * 5) + 1
+						].sort(() => Math.random() - 0.5), // Shuffle options
+						answer: answer
+					};
+
+					// Mix the questions
+					questions.push(mathQuestion);
+					const randomIndex = Math.floor(Math.random() * questions.length);
+					const currentQuestion = questions[randomIndex];
+
+					// Set question and options dynamically
+					$questionDiv.innerHTML = currentQuestion.question;
+
+					$optionsDiv.forEach((button, index) => {
+						if (currentQuestion.options[index] !== undefined) {
+							button.innerHTML = currentQuestion.options[index];
+							button.onclick = () => checkAnswer(currentQuestion.options[index], currentQuestion.answer);
+						}
+					});
+				} catch (error) {
+					console.error("Error loading questions:", error);
+				}
+			}
+
+			function checkAnswer(selected, correct) {
+				if (selected === correct) {
+					console.log("Correct!");
+					knight.performAttack(slime);
+				} else {
+					console.log("Wrong answer.");
+					slime.performAttack(knight);
+				}
+				setTimeout(loadQuestion, 1000); // Load next question after a delay
+			}
+
 			// // contoh update question dan options
 			//$optionDiv[_] juga bisa dipake buat kasih .addEventListener()
 
-
-			
 			// contoh ngedisplay alert jawaban benar ato salah [true, false], kosongkan untuk menghilangkan alert 
-			$answerResultDiv.dataset.answerResult = "true";
+			$answerResultDiv.dataset.answerResult = "";
 			// contoh ngedisplay alert jawaban benar ato salah
 
 
 
 			// contoh ngedisplay alert next level [true, false]
-			$nextLevelAlertDiv.dataset.hidden = false;
+			$nextLevelAlertDiv.dataset.hidden = true;
 			// // contoh ngedisplay alert next level
-
 
 			// contoh cara jalanin timer display (otomatis langsung jalan setelah fungsi dipanggil)
 			setQuestionTimer(4000);
@@ -380,13 +516,9 @@
 			}, 3220);
 			// contoh cara jalanin timer display
 
-
-
 			// cara ubah avatar dan nama [slime, golem, jellyfish, skeleton, slimeBoss]
 			$enemyInfoDiv.dataset.enemyName = 'slime';
 			// // cara ubah avatar dan nama
-
-
 
 			// contoh cara spawn enemy
 			$slime.dataset.animate = 'idle';
@@ -397,8 +529,6 @@
 			// // contoh cara spawn enemy
 			// cara despawn tinggal dibikin $__.dataset.animate = 'died';
 
-
-
 			// contoh jalanin animasi
 			animateKnightAttack(document.querySelector('#enemyContainer>[data-animate="idle"]'));
 			// animateSlimeAttack();
@@ -408,12 +538,11 @@
 			// animateSlimeBossAttack();
 			// // contoh jalanin animasi
 
-
-
 			// contoh ubah hp
-			changePlayerHpBar(100, 50);
-			changeEnemyHpBar(50, 20);
+			// changePlayerHpBar(100, 50);
+			// changeEnemyHpBar(50, 20);
 			// // contoh ubah hp
+			loadQuestion();
 		});
 	</script>
 </body>

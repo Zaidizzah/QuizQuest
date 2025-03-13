@@ -1,0 +1,304 @@
+{
+    "quiz": [
+        {
+        "question": "Apa yang harus dilakukan sebelum membaca sebuah teks agar lebih mudah memahaminya?",
+        "options": [
+            "Membaca tanpa berhenti",
+            "Menebak isi teks tanpa membacanya",
+            "Membaca judul, subjudul, dan kata kunci",
+            "Langsung mencari arti kata sulit"
+        ],
+        "answer": "Membaca judul, subjudul, dan kata kunci"
+        },
+        {
+        "question": "Mengapa memahami konteks bacaan itu penting?",
+        "options": [
+            "Agar bisa menghafal setiap kata dalam teks",
+            "Agar dapat menghubungkan informasi dengan pengetahuan sebelumnya",
+            "Agar bisa membaca lebih cepat",
+            "Agar dapat menulis ulang teks dengan kata-kata sendiri"
+        ],
+        "answer": "Agar dapat menghubungkan informasi dengan pengetahuan sebelumnya"
+        },
+        {
+        "question": "Apa yang bisa dilakukan jika menemukan kata sulit dalam sebuah teks?",
+        "options": [
+            "Melewatkannya tanpa berusaha memahami",
+            "Menebak artinya tanpa konteks",
+            "Mencari makna berdasarkan kalimat di sekitarnya",
+            "Mengabaikan teks yang mengandung kata sulit"
+        ],
+        "answer": "Mencari makna berdasarkan kalimat di sekitarnya"
+        },
+        {
+        "question": "Apa yang dimaksud dengan membaca kritis?",
+        "options": [
+            "Membaca dengan kecepatan tinggi",
+            "Membaca sambil mencatat setiap kata",
+            "Membaca dengan memahami, menganalisis, dan mengevaluasi isi bacaan",
+            "Membaca hanya bagian yang menarik"
+        ],
+        "answer": "Membaca dengan memahami, menganalisis, dan mengevaluasi isi bacaan"
+        },
+        {
+        "question": "Bagaimana cara mengetahui gagasan utama dalam sebuah paragraf?",
+        "options": [
+            "Mencari kalimat yang paling panjang",
+            "Menemukan kalimat yang mengandung inti pembahasan",
+            "Membaca hanya kalimat pertama",
+            "Mencari kata yang sering diulang"
+        ],
+        "answer": "Menemukan kalimat yang mengandung inti pembahasan"
+        },
+        {
+        "question": "Apa manfaat membuat ringkasan setelah membaca sebuah teks?",
+        "options": [
+            "Menghafal seluruh isi bacaan",
+            "Menyederhanakan informasi penting",
+            "Mengubah isi bacaan menjadi lebih panjang",
+            "Mengganti semua kata dengan sinonimnya"
+        ],
+        "answer": "Menyederhanakan informasi penting"
+        },
+        {
+        "question": "Ketika membaca teks argumentatif, apa yang harus diperhatikan?",
+        "options": [
+            "Pendapat dan alasan yang diberikan oleh penulis",
+            "Jumlah paragraf dalam teks",
+            "Jumlah kata sulit yang digunakan",
+            "Gaya bahasa yang digunakan"
+        ],
+        "answer": "Pendapat dan alasan yang diberikan oleh penulis"
+        },
+        {
+        "question": "Apa yang harus dilakukan jika menemukan informasi yang bertentangan dalam sebuah bacaan?",
+        "options": [
+            "Menerima semua informasi tanpa berpikir kritis",
+            "Membandingkan dengan sumber lain yang terpercaya",
+            "Mengabaikan teks tersebut",
+            "Langsung menganggap informasi itu salah"
+        ],
+        "answer": "Membandingkan dengan sumber lain yang terpercaya"
+        },
+        {
+        "question": "Apa tujuan dari membaca pemahaman?",
+        "options": [
+            "Membaca dengan cepat tanpa memahami",
+            "Mampu mengingat semua kata dalam teks",
+            "Mengetahui isi teks dan memahaminya secara mendalam",
+            "Mengubah teks ke dalam bentuk lain"
+        ],
+        "answer": "Mengetahui isi teks dan memahaminya secara mendalam"
+        },
+        {
+        "question": "Mengapa penting untuk membedakan fakta dan opini dalam sebuah teks?",
+        "options": [
+            "Agar dapat menilai kebenaran informasi dengan lebih baik",
+            "Agar bisa menyusun ulang teks menjadi lebih menarik",
+            "Agar bisa membaca lebih cepat",
+            "Agar dapat menyalin teks dengan lebih mudah"
+        ],
+        "answer": "Agar dapat menilai kebenaran informasi dengan lebih baik"
+        },
+        {
+        "question": "Apa yang dimaksud dengan membaca intensif?",
+        "options": [
+            "Membaca dengan cepat tanpa memperhatikan detail",
+            "Membaca secara mendalam untuk memahami isi teks",
+            "Membaca hanya bagian awal dan akhir teks",
+            "Membaca teks sambil mendengarkan musik"
+        ],
+        "answer": "Membaca secara mendalam untuk memahami isi teks"
+        },
+        {
+        "question": "Bagaimana cara membedakan informasi utama dan informasi pendukung dalam teks?",
+        "options": [
+            "Informasi utama biasanya berupa fakta atau ide pokok, sedangkan informasi pendukung menjelaskan atau memberi contoh",
+            "Informasi utama terletak di awal teks, sedangkan informasi pendukung ada di akhir",
+            "Informasi utama selalu ditulis dengan huruf besar",
+            "Informasi utama hanya ditemukan dalam buku pelajaran"
+        ],
+        "answer": "Informasi utama biasanya berupa fakta atau ide pokok, sedangkan informasi pendukung menjelaskan atau memberi contoh"
+        },
+        {
+        "question": "Apa tujuan dari membaca ekstensif?",
+        "options": [
+            "Memahami teks secara mendalam dengan fokus pada detail",
+            "Membaca berbagai teks untuk mendapatkan gambaran umum",
+            "Menghafal setiap kata dalam teks",
+            "Membaca satu teks berulang-ulang"
+        ],
+        "answer": "Membaca berbagai teks untuk mendapatkan gambaran umum"
+        },
+        {
+        "question": "Apa yang harus dilakukan setelah membaca teks agar pemahaman lebih baik?",
+        "options": [
+            "Segera melupakan isi teks",
+            "Menulis ringkasan atau menyampaikan kembali dengan kata-kata sendiri",
+            "Membaca teks lain tanpa memikirkan yang sebelumnya",
+            "Mengabaikan bagian yang sulit dipahami"
+        ],
+        "answer": "Menulis ringkasan atau menyampaikan kembali dengan kata-kata sendiri"
+        },
+        {
+        "question": "Bagaimana cara mengenali sudut pandang penulis dalam sebuah teks?",
+        "options": [
+            "Melihat siapa penulisnya dan menebak pendapatnya",
+            "Menganalisis kata-kata yang digunakan dan bagaimana fakta disajikan",
+            "Mengabaikan gaya penulisan dan hanya fokus pada isi",
+            "Mencari kata-kata yang panjang dan sulit dipahami"
+        ],
+        "answer": "Menganalisis kata-kata yang digunakan dan bagaimana fakta disajikan"
+        },
+        {
+        "question": "Mengapa penting untuk mengenali struktur teks saat membaca?",
+        "options": [
+            "Agar dapat menemukan informasi dengan lebih cepat",
+            "Agar bisa membaca lebih cepat tanpa memahami isi",
+            "Agar dapat menyalin teks dengan lebih mudah",
+            "Agar bisa menghafal setiap kata dalam teks"
+        ],
+        "answer": "Agar dapat menemukan informasi dengan lebih cepat"
+        },
+        {
+        "question": "Apa yang dimaksud dengan inferensi dalam membaca?",
+        "options": [
+            "Menebak isi teks tanpa membaca",
+            "Menggunakan petunjuk dalam teks untuk menyimpulkan sesuatu yang tidak disebutkan secara langsung",
+            "Membaca teks dengan suara keras",
+            "Menghafal semua informasi dalam teks"
+        ],
+        "answer": "Menggunakan petunjuk dalam teks untuk menyimpulkan sesuatu yang tidak disebutkan secara langsung"
+        },
+        {
+        "question": "Bagaimana cara mengidentifikasi opini dalam sebuah teks?",
+        "options": [
+            "Opini biasanya disertai bukti dan fakta",
+            "Opini bersifat subjektif dan sering menggunakan kata-kata seperti 'saya pikir' atau 'menurut saya'",
+            "Opini selalu ditulis dalam paragraf terakhir",
+            "Opini selalu lebih panjang daripada fakta"
+        ],
+        "answer": "Opini bersifat subjektif dan sering menggunakan kata-kata seperti 'saya pikir' atau 'menurut saya'"
+        },
+        {
+        "question": "Apa yang dimaksud dengan skimming dalam teknik membaca?",
+        "options": [
+            "Membaca cepat untuk mendapatkan gambaran umum",
+            "Membaca kata per kata dengan teliti",
+            "Membaca dengan menghafal setiap detail",
+            "Membaca sambil mencatat semua kata sulit"
+        ],
+        "answer": "Membaca cepat untuk mendapatkan gambaran umum"
+        },
+        {
+        "question": "Apa yang dimaksud dengan scanning dalam teknik membaca?",
+        "options": [
+            "Membaca cepat untuk menemukan informasi spesifik",
+            "Membaca dari awal hingga akhir tanpa berhenti",
+            "Membaca sambil menghafal semua isi teks",
+            "Membaca dengan memperhatikan setiap kata dengan teliti"
+        ],
+        "answer": "Membaca cepat untuk menemukan informasi spesifik"
+        },
+        {
+        "question": "Mengapa penting untuk memahami makna tersirat dalam sebuah teks?",
+        "options": [
+            "Agar dapat membaca lebih cepat",
+            "Agar bisa memahami pesan yang tidak disampaikan secara langsung",
+            "Agar dapat menghafal teks dengan lebih mudah",
+            "Agar bisa menyalin teks tanpa kesalahan"
+        ],
+        "answer": "Agar bisa memahami pesan yang tidak disampaikan secara langsung"
+        },
+        {
+        "question": "Apa yang dimaksud dengan membaca pemindaian (scanning)?",
+        "options": [
+            "Membaca dengan suara keras",
+            "Membaca untuk menemukan informasi spesifik dalam teks",
+            "Membaca tanpa memahami isi",
+            "Membaca dari awal hingga akhir secara mendalam"
+        ],
+        "answer": "Membaca untuk menemukan informasi spesifik dalam teks"
+        },
+        {
+        "question": "Bagaimana cara mengenali teks argumentatif?",
+        "options": [
+            "Teks ini hanya berisi fakta tanpa pendapat",
+            "Teks ini memiliki klaim dan alasan untuk mendukung klaim tersebut",
+            "Teks ini tidak memiliki struktur yang jelas",
+            "Teks ini hanya berisi narasi tanpa opini"
+        ],
+        "answer": "Teks ini memiliki klaim dan alasan untuk mendukung klaim tersebut"
+        },
+        {
+        "question": "Apa langkah pertama yang dapat dilakukan saat menemukan teks yang sulit dipahami?",
+        "options": [
+            "Mengabaikan teks tersebut",
+            "Membaca ulang secara perlahan dan mencari kata kunci",
+            "Langsung mencari ringkasan teks",
+            "Mencari sinonim dari setiap kata sulit"
+        ],
+        "answer": "Membaca ulang secara perlahan dan mencari kata kunci"
+        },
+        {
+        "question": "Apa yang dimaksud dengan membaca eksploratif?",
+        "options": [
+            "Membaca untuk mencari informasi baru dan memperluas wawasan",
+            "Membaca hanya untuk menyelesaikan tugas",
+            "Membaca dengan sangat cepat tanpa memahami isinya",
+            "Membaca hanya bagian awal dan akhir teks"
+        ],
+        "answer": "Membaca untuk mencari informasi baru dan memperluas wawasan"
+        },
+        {
+        "question": "Bagaimana cara mengetahui apakah sebuah sumber bacaan dapat dipercaya?",
+        "options": [
+            "Memastikan sumber berasal dari penulis atau lembaga yang kredibel",
+            "Memilih bacaan yang memiliki banyak gambar",
+            "Mencari sumber yang hanya sesuai dengan pendapat pribadi",
+            "Memastikan teks menggunakan bahasa yang sulit"
+        ],
+        "answer": "Memastikan sumber berasal dari penulis atau lembaga yang kredibel"
+        },
+        {
+        "question": "Apa yang harus dilakukan jika menemukan informasi yang bertentangan dengan pengetahuan sebelumnya?",
+        "options": [
+            "Langsung menganggap informasi baru salah",
+            "Membandingkan dengan sumber lain yang kredibel",
+            "Mengabaikan informasi tersebut",
+            "Menulis ulang informasi agar sesuai dengan pemahaman sebelumnya"
+        ],
+        "answer": "Membandingkan dengan sumber lain yang kredibel"
+        },
+        {
+        "question": "Apa yang dimaksud dengan membaca evaluatif?",
+        "options": [
+            "Membaca untuk menilai keakuratan dan kredibilitas informasi dalam teks",
+            "Membaca hanya untuk hiburan",
+            "Membaca tanpa mempertimbangkan kebenaran isi teks",
+            "Membaca dengan fokus pada gaya bahasa"
+        ],
+        "answer": "Membaca untuk menilai keakuratan dan kredibilitas informasi dalam teks"
+        },
+        {
+        "question": "Apa yang dimaksud dengan kata kunci dalam sebuah teks?",
+        "options": [
+            "Kata yang paling sering muncul dalam teks",
+            "Kata yang mengandung inti informasi dalam teks",
+            "Kata yang sulit dipahami",
+            "Kata yang memiliki lebih dari satu arti"
+        ],
+        "answer": "Kata yang mengandung inti informasi dalam teks"
+        },
+        {
+        "question": "Bagaimana cara meningkatkan pemahaman bacaan?",
+        "options": [
+            "Membaca teks berulang kali tanpa menganalisisnya",
+            "Membaca dengan fokus, membuat catatan, dan meringkas informasi",
+            "Menghafal seluruh isi teks",
+            "Membaca sambil melakukan aktivitas lain"
+        ],
+        "answer": "Membaca dengan fokus, membuat catatan, dan meringkas informasi"
+        }
+    ]
+}
