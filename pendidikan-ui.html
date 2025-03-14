@@ -28,6 +28,11 @@
     <link
       rel="stylesheet"
       type="text/css"
+      href="resources/css/tooltip.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
       href="resources/css/pendidikan-ui.css"
     />
 
@@ -44,19 +49,24 @@
     ></script>
   </head>
   <body>
-    <div class="container">
-      <h1>Masalah Pendidikan <br />Negara Indonesia</h1>
-
-      <img
-        src="assets/games ui/main menu/indonesia.png"
-        alt="Peta Indonesia"
-        class="background-img"
-        style="transform: scale(1.2)"
-      />
+    <div
+      class="pendidikan-container"
+      aria-labelledby="pendidikan-container-title"
+    >
+      <h1
+        class="pendidikan-container-title"
+        id="pendidikan-container-title"
+      >
+        Masalah Pendidikan <br />Negara Indonesia
+      </h1>
 
       <div class="card-wrapper">
         <!-- Card 1 -->
-        <div class="card">
+        <div
+          class="card tooltip-trigger"
+          data-placement="top"
+          data-tooltip="Ketimpangan Pendidikan"
+        >
           <div class="card-inner">
             <div class="card-front">
               <div class="card-icon">
@@ -74,7 +84,11 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="card">
+        <div
+          class="card tooltip-trigger"
+          data-placement="top"
+          data-tooltip="Kekurangan Guru"
+        >
           <div class="card-inner">
             <div class="card-front">
               <div class="card-icon">
@@ -92,7 +106,11 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="card">
+        <div
+          class="card tooltip-trigger"
+          data-placement="top"
+          data-tooltip="Hambatan Kurikulum"
+        >
           <div class="card-inner">
             <div class="card-front">
               <div class="card-icon">
@@ -165,5 +183,10 @@
         </a>
       </div>
     </div>
+
+    <script
+      type="text/javascript"
+      src="resources/javascript/tooltip.js"
+    ></script>
   </body>
 </html>
