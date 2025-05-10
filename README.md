@@ -5,9 +5,9 @@
 Merupakan proyek bersama yang dikerjakan kala mengikuti kompetisidalam rangka meningkatkan minat baca dan literasi diera digital dengan menumpahkan ide dalam pengembangan game berbasis we menggunakan HTML, CSS, JAVASCRIPT dengan penuh <mark>KEGABUTAN</mark> bersama :].
 
 ## Kontributor:
-- (Ibnu Umar)[https://github.com/Slypery] sebagai game analist, animator, dan game desainer
-- (Zaid Izzah Nurbaain)[https://github.com/Zaidizzah/] sebagai game analist, dan game desainer
-- (Naufal Fadhli)[https://github.com/Lovrenski] sebagai game analist, animator, system analist, dan pembangunan alur game
+- [Ibnu Umar](https://github.com/Slypery) sebagai game analist, animator, dan game desainer
+- [Zaid Izzah Nurbaain](https://github.com/Zaidizzah/) sebagai game analist, dan game desainer
+- [Naufal Fadhli](https://github.com/Lovrenski) sebagai game analist, animator, system analist, dan pembangunan alur game
 - **Fatih Elang** sebagai penyedia semua assets dalam game maupun logo QUIZ QUEST
 
 ## Link cepat
