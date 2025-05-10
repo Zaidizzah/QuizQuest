@@ -10,8 +10,6 @@ Merupakan proyek bersama yang dikerjakan kala mengikuti kompetisidalam rangka me
 - (Naufal Fadhli)[https://github.com/Lovrenski] sebagai game analist, animator, system analist, dan pembangunan alur game
 - **Fatih Elang** sebagai penyedia semua assets dalam game maupun logo QUIZ QUEST
 
----
-
 ## Link cepat
 - [Quiz Quest](#quiz-quest)
 - [Kontributor](#kontributor)
